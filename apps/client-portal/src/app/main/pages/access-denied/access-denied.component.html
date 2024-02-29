@@ -1,0 +1,76 @@
+<div style="background-image: url(assets/images/orange.webp);
+background-repeat: no-repeat;
+height: 100vh;
+background-position: 0 0;" class="white-bg flex justify-content-center pb-8">
+  <div id="home" class="landing-wrapper overflow-hidden">
+    <div
+      class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static mb-3">
+      <!-- <a class="flex align-items-center" href="#">
+          <span class="block text-5xl font-bold mb-1 black-font"><strong>MONITA</strong></span>
+        </a> -->
+      <a class="align-items-center" href="#">
+        <span class="block text-4xl font-bold mb-1 grey-font">
+          <img src="assets/images/logos/monita-black-logo.png" alt="logo" height="70" class="img-fluid" /></span>
+      </a>
+      <a pRipple class="cursor-pointer block lg:hidden text-700" pStyleClass="@next" enterClass="hidden"
+        leaveToClass="hidden" [hideOnOutsideClick]="true">
+        <i class="pi pi-bars text-4xl"></i>
+      </a>
+      <div
+        class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2"
+        style="top:85%">
+        <!-- <ul class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer">
+          <li>
+            <a pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+              <span>Features</span>
+            </a>
+          </li>
+          <li>
+            <a pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+              <span>Highlights</span>
+            </a>
+          </li>
+          <li>
+            <a pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+              <span>Pricing</span>
+            </a>
+          </li>
+        </ul> -->
+        <!-- <p-menu styleClass="p-2 shadow-6 mt-1 border" #loginDropDown [model]="items" [popup]="true"></p-menu> -->
+        <div
+          class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
+          <!-- <button pButton pRipple routerLink="/auth/login" label="Login" class="px-5 p-button-rounded p-button-text p-button-success font-light line-height-2"></button>
+          <button pButton pRipple (click)="loginDropDown.toggle($event)" icon="pi pi-sign-in" label="Sign in"
+            class="p-button-rounded p-button-primary p-button-raised ml-2 px-6 font-light line-height-2 "></button> -->
+        </div>
+      </div>
+    </div>
+
+    <div id="hero" class="grid py-4 px-4 lg:px-8 relative text-center">
+
+      <div class="pt-3">
+        <div class="mx-4 md:mx-8 mt-0 md:mt-4 pt-8">
+          <div class="py-4 px-4 lg:px-8 ">
+            <img src="assets/images/asset-access.svg" alt="" height="250" class="sm:mt-5 md:mt-0">
+          </div>
+          <div class="float-left pb-3">
+            <h1 class="text-6xl font-bold text-gray-900 line-height-2">Access Denied</h1>
+            <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">You do not have the necessary
+              permisions. Please contact admins. </p>
+            <button pButton pRipple (click)="goBack()" type="button" label="Go Back"
+              class="p-button-rounded p-button-primary p-button-raised text-xl border-none mt-3 font-normal line-height-3 px-6"></button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

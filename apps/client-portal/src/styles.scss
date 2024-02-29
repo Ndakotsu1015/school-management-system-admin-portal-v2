@@ -1,0 +1,625 @@
+/* You can add global styles to this file, and also import other style files */
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../../../node_modules/primeng/resources/primeng.min.css";
+@import "assets/layout/styles/theme/bootstrap4-light-blue/theme.css";
+// @import "../../../node_modules/primeng/resources/themes/lara-light-blue/theme.css";
+@import "../../../node_modules/primeflex/primeflex.scss";
+@import "../../../node_modules/primeicons/primeicons.css";
+
+/* QuillJS */
+@import "../../../node_modules/quill/dist/quill.core.css";
+@import "../../../node_modules/quill/dist/quill.snow.css";
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source Code Pro');
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+
+.roboto-font {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.montserrat-font {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.font-source-code-pro {
+  font-family: 'Source Code Pro', monospace !important;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+
+.float-r {
+  float: right !important;
+}
+
+.float-l {
+  float: left;
+}
+
+.yellow-green-gradient {
+  background: #00416A;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFE000, #799F0C, #00416A);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFE000, #799F0C, #00416A);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.deep-green-bg {
+  background-color: #083A50 !important;
+}
+
+.deep-green-font {
+  color: #083A50 !important;
+}
+
+.light-green-bg {
+  background-color: #598BAF !important;
+}
+
+.light-green-font {
+  color: #598BAF !important;
+}
+
+.orange-font {
+  color: #E36C3E !important;
+}
+
+.orange-bg {
+  background-color: #E36C3E !important;
+}
+
+.grey-bg {
+  background-color: #505D6F !important;
+}
+
+.ash-bg {
+  background-color: #F0F3F9 !important;
+}
+
+.bold-font {
+  font-weight: 900;
+}
+
+.bold-font-sm {
+  font-weight: 400;
+}
+
+.grey-font {
+  color: #505D6F !important;
+}
+
+.white-bg {
+  background-color: #ffffff !important;
+}
+
+.green-bg {
+  background-color: #28a745 !important;
+}
+
+.green-bg-light {
+  background-color: #A6E7D8 !important;
+}
+
+.green-font {
+  color: #28a745 !important;
+}
+
+.green-l-bg {
+  background-color: #28a745 !important;
+}
+
+.greenl-l-font {
+  color: #28a745 !important;
+}
+
+.yellow-bg {
+  background-color: #fdcf6f !important;
+}
+
+.yellow-font {
+  color: #fdcf6f !important;
+}
+
+.yellow-l-bg {
+  background-color: #fffcf1 !important;
+}
+
+.yellow-l-font {
+  color: #fffcf1 !important;
+}
+
+.black-bg {
+  background-color: #000000 !important;
+}
+
+.black-font {
+  color: #000000 !important;
+}
+
+.white-bg {
+  background-color: #ffffff !important;
+}
+
+.white-font {
+  color: #ffffff !important;
+}
+
+.green-btn {
+  background-color: #043d12 !important;
+  color: #ffffff !important;
+  border: 1px solid #28a745
+}
+
+.green-btn:hover {
+  background-color: #28a745 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000
+}
+
+.light-surface {
+  background-color: #eff3f8 !important;
+}
+
+.white-btn {
+  background-color: #ffffff !important;
+  border: .1rem solid #fff !important;
+  color: #191919 !important;
+}
+
+.white-btn:hover {
+  background-color: #28a745 !important;
+  border: .1rem solid #fff !important;
+  color: #ffffff !important;
+}
+
+.p-inplace .p-inplace-display {
+  padding: 0;
+  border-radius: 4px;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.p-input-icon-left,
+.p-input-icon-right {
+  position: relative;
+  display: block;
+}
+
+.load-btn {
+  color: #000000;
+  background: #F7F7FA;
+  border: 1px solid #E0E0E1;
+}
+
+.load-btn:hover {
+  color: #000000 !important;
+  background: #E0E0E1 !important;
+  border: 1px solid #E0E0E1 !important;
+}
+
+.light-grey-bg {
+  background: #FCFCFD !important;
+  border: 1px solid #EAEAEB !important;
+}
+
+.page-title {
+  position: fixed !important;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+.menu-container {
+  position: fixed;
+  bottom: 0;
+  // left: 0;
+  width: 13%;
+}
+
+.grey-btn {
+  // background-color: #04C35C !important;
+  // border: .1rem solid #04C35C !important;
+  color: #BDBDBD !important;
+}
+
+.grey-btn:hover {
+  background-color: #4A5468 !important;
+  // border: .1rem solid #04C35C !important;
+  color: #ffffff !important;
+}
+
+.nunito-font {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.menu-container {
+  position: fixed;
+  // bottom: 0;
+  // left: 0;
+  background-color: #F0F3F9;
+  width: 198px !important;
+  // height: 95px !important;
+}
+
+.menu-scroll {
+  max-height: 400px;
+  /* Adjust the maximum height as needed */
+  overflow-y: auto;
+}
+
+
+.logout-menu {
+  margin: 0;
+  padding: 0;
+  // padding-top: 25px;
+  list-style-type: none;
+
+  .layout-root-menuitem {
+    >.layout-menuitem-root-text {
+      font-size: .857rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      // color: var(--surface-a);
+      color: #8a8787;
+      margin: .75rem 0;
+    }
+
+    >a {
+      display: none;
+    }
+  }
+
+  a {
+    user-select: none;
+
+    &.active-menuitem {
+      >.layout-submenu-toggler {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  li.active-menuitem {
+    >a {
+      .layout-submenu-toggler {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  ul {
+    // margin: 0;
+    margin-bottom: 40px;
+    padding: 0;
+    list-style-type: none;
+
+    a {
+      display: flex;
+      align-items: center;
+      position: relative;
+      outline: 0 none;
+      color: #BDBDBD;
+      color: #000000;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 1.25rem 0 1.25rem 1rem;
+      word-wrap: break-word;
+      padding: 1.25rem 0 1.25rem 1rem;
+      margin: 0 0 5px 0;
+      border-radius: $borderRadius;
+      transition: background-color $transitionDuration, box-shadow $transitionDuration;
+
+      .layout-menuitem-icon {
+        margin-right: .5rem;
+      }
+
+      .layout-submenu-toggler {
+        font-size: 75%;
+        margin-left: auto;
+        transition: transform $transitionDuration;
+      }
+
+      &.rotated-icon {
+        .layout-menuitem-icon {
+          transform: rotate(90deg);
+        }
+      }
+
+      &.active-route {
+        font-weight: 700;
+        // color: var(--surface-g);
+        // color: #8a8787;
+        color: #E36C3E;
+      }
+
+      &:hover {
+        // background-color: var(--surface-hover);
+        // color: #4A5468;
+        // color: #8a8787;
+        color: #E36C3E;
+      }
+
+      &:focus {
+        @include focused-inset();
+      }
+    }
+
+    ul {
+      overflow: hidden;
+      border-radius: $borderRadius;
+
+      li {
+        a {
+          margin-left: 1rem;
+        }
+
+        li {
+          a {
+            margin-left: 2rem;
+          }
+
+          li {
+            a {
+              margin-left: 2.5rem;
+            }
+
+            li {
+              a {
+                margin-left: 3rem;
+              }
+
+              li {
+                a {
+                  margin-left: 3.5rem;
+                }
+
+                li {
+                  a {
+                    margin-left: 4rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo-container {
+  position: fixed;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  background-color: #F0F3F9;
+  width: 215px;
+  z-index: 1000;
+  margin-top: -5px;
+  padding-top: 15px;
+  // padding-bottom: 15px;
+}
+
+.layout-menu {
+  margin-top: 85px;
+  /* Adjust this value to match the height of the logo */
+}
+
+// .white-icon {
+//   filter: brightness(0) invert(1);
+// }
+
+ngx-intl-tel-input input {
+  height: 3.2rem;
+  padding: 8px;
+  width: 100%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c7cace;
+  border-radius: 6px;
+}
+
+ngx-intl-tel-input.ng-invalid.ng-touched input {
+  border: 1px solid #c0392b;
+}
+
+// ngx-intl-tel-input input:hover {
+// 	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24);
+// }
+
+ngx-intl-tel-input input:focus {
+  outline: none !important;
+  border-color: #3498db;
+  box-shadow: 0 0 0 0 #000;
+}
+
+ngx-intl-tel-input input::-webkit-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input:-ms-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input::-ms-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input::placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input[disabled] {
+  background-color: #e5eaf1;
+}
+
+.img-fit {
+  background-position: center center;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.ash-bg {
+  background-color: #4A5468;
+}
+
+.toggle-btn {
+  background-color: #4A5468 !important;
+  color: #ffffff;
+}
+
+.toggle-btn:hover {
+  background-color: #ffffff !important;
+  color: #4A5468 !important;
+}
+
+.toggle-icon {
+  color: #4A5468;
+}
+
+.toggle-icon:hover {
+  color: #ffffff !important;
+}
+
+.grey-bg {
+  background-color: #F0F3F9 !important;
+}
+
+.custom-card {
+  background-color: #F0F3F9;
+  // padding: 20px;
+  // border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.card-flex {
+  // background-color: #f0f0f0;
+  // padding: 20px;
+  // border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  font-size: 48px;
+  // font-weight: bold;
+  margin-right: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  // font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-flex2 {
+  display: flex;
+  justify-content: center;
+}
+
+.col-left {
+  align-self: flex-end;
+}
+
+.col-right {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.card-height {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Importing Bootstrap SCSS file. */
+// @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+// @import "../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+ngx-dropzone {
+  width: fit-content;
+  height: fit-content;
+  overflow: auto;
+
+  div {
+    justify-items: center;
+    text-align: center;
+    width: auto;
+  }
+}

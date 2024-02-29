@@ -1,0 +1,422 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int                  @id @default(autoincrement())
+  first_name         String
+  last_name          String
+  email              String               @unique
+  parent_id          Int
+  admission_number   String
+  roll_number        String
+  class_id           Int
+  class              Class                @relation(fields: [class_id], references: [id])
+  session_id         Int
+  session            Session              @relation(fields: [session_id], references: [id])
+  term_id            Int
+  term               Term                 @relation(fields: [term_id], references: [id])
+  gender             Gender               @default(Male)
+  date_of_birth      DateTime
+  club               String
+  religion           Religion             @default(Islam)
+  marital_status     MaritalStatus        @default(Single)
+  mobile_number      String
+  admission_date     DateTime
+  joining_date       DateTime
+  profile_pic        String
+  height             String
+  weight             String
+  address            String
+  parmanent_address  String
+  work_experience    String
+  qualification      String
+  note               String
+  state_id           Int
+  state              State                @relation(fields: [state_id], references: [id])
+  lga_id             Int
+  lga                Lga                  @relation(fields: [lga_id], references: [id])
+  country_id         Int
+  country            Country              @relation(fields: [country_id], references: [id])
+  occupation         String
+  genotype           Genotype             @default(AA)
+  blood_grpup        BloodGroup           @default(A_POS)
+  nin                String
+  is_delete          Boolean              @default(false)
+  status             Status               @default(Active)
+  picture            String
+  password           String
+  role               Role                 @default(Admin)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  AssignClassTeacher AssignClassTeacher[]
+  StudentAttendance  StudentAttendance[]
+  Chat               Chat[]
+  HomeworkSubmission HomeworkSubmission[]
+  MarksRegister      MarksRegister[]
+  StudentFee         StudentFee[]
+}
+
+model Class {
+  id                 Int                  @id @default(autoincrement())
+  first_name         String
+  last_name          String
+  other_name         String
+  amount             Decimal
+  status             Status               @default(Active)
+  is_active          Boolean              @default(true)
+  created_by         Role                 @default(Admin)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  User               User[]
+  ClassSubject       ClassSubject[]
+  AssignClassTeacher AssignClassTeacher[]
+  StudentAttendance  StudentAttendance[]
+  ExamSchedule       ExamSchedule[]
+  Homework           Homework[]
+  HomeworkSubmission HomeworkSubmission[]
+  MarksRegister      MarksRegister[]
+  StudentFee         StudentFee[]
+}
+
+model Session {
+  id         Int      @id @default(autoincrement())
+  name       String
+  status     Status   @default(Active)
+  is_delete  Boolean  @default(false)
+  created_by Role     @default(Admin)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User[]
+}
+
+model Term {
+  id         Int      @id @default(autoincrement())
+  name       String
+  status     Status   @default(Active)
+  is_delete  Boolean  @default(false)
+  created_by Role     @default(Admin)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User[]
+}
+
+model Country {
+  id         Int    @id @default(autoincrement())
+  name       String @db.VarChar(200)
+  code       String @db.VarChar(8)
+  phone_code String @db.VarChar(8)
+  // relations
+  User       User[]
+}
+
+model State {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(200)
+  // relations
+  lgas Lga[]
+  User User[]
+}
+
+model Lga {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(200)
+  // relations
+  state_id Int
+  state    State  @relation(fields: [state_id], references: [id])
+  User     User[]
+}
+
+model Subject {
+  id            Int             @id @default(autoincrement())
+  name          String
+  type          SubjectType     @default(Theory)
+  created_by    Role            @default(Admin)
+  status        Status          @default(Active)
+  is_delete     Boolean         @default(false)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  ClassSubject  ClassSubject[]
+  ExamSchedule  ExamSchedule[]
+  Homework      Homework[]
+  MarksRegister MarksRegister[]
+}
+
+model ClassSubject {
+  id         Int      @id @default(autoincrement())
+  class_id   Int
+  class      Class    @relation(fields: [class_id], references: [id])
+  subject_id Int
+  subject    Subject  @relation(fields: [subject_id], references: [id])
+  created_by Role     @default(Admin)
+  status     Status   @default(Active)
+  is_delete  Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model AssignClassTeacher {
+  id         Int      @id @default(autoincrement())
+  class_id   Int
+  class      Class    @relation(fields: [class_id], references: [id])
+  teacher_id Int
+  user       User     @relation(fields: [teacher_id], references: [id])
+  created_by Role     @default(Admin)
+  status     Status   @default(Active)
+  is_delete  Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model StudentAttendance {
+  id              Int            @id @default(autoincrement())
+  class_id        Int
+  class           Class          @relation(fields: [class_id], references: [id])
+  attendance_date DateTime
+  student_id      Int
+  user            User           @relation(fields: [student_id], references: [id])
+  attendance_type AttendanceType @default(Present)
+  created_by      Role           @default(Admin)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+}
+
+model Day {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Chat {
+  id           Int      @id @default(autoincrement())
+  sender_id    Int
+  receiver_id  Int
+  User         User?    @relation(fields: [userId], references: [id])
+  userId       Int?
+  message      String   @db.Text
+  file         String
+  status       Status   @default(Active)
+  created_date DateTime
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
+
+model Exam {
+  id            Int             @id @default(autoincrement())
+  name          String
+  note          String          @db.VarChar(200)
+  created_by    Role            @default(Admin)
+  is_delete     Boolean         @default(false)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  ExamSchedule  ExamSchedule[]
+  MarksRegister MarksRegister[]
+}
+
+model ExamSchedule {
+  id          Int      @id @default(autoincrement())
+  exam_id     Int
+  exam        Exam     @relation(fields: [exam_id], references: [id])
+  class_id    Int
+  class       Class    @relation(fields: [class_id], references: [id])
+  subject_id  Int
+  subject     Subject  @relation(fields: [subject_id], references: [id])
+  exam_date   DateTime
+  start_time  DateTime
+  end_time    DateTime
+  room_number Int
+  full_marks  Int
+  pass_marks  Int
+  created_by  Role     @default(Admin)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Homework {
+  id              Int      @id @default(autoincrement())
+  class_id        Int
+  class           Class    @relation(fields: [class_id], references: [id])
+  subject_id      Int
+  subject         Subject  @relation(fields: [subject_id], references: [id])
+  homework_date   DateTime
+  submission_time DateTime
+  document_file   String
+  description     String   @db.VarChar(200)
+  is_delete       Boolean  @default(false)
+  created_by      Role     @default(Admin)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
+model HomeworkSubmission {
+  id            Int      @id @default(autoincrement())
+  homework_id   Int
+  class         Class    @relation(fields: [homework_id], references: [id])
+  student_id    Int
+  user          User     @relation(fields: [student_id], references: [id])
+  description   String   @db.VarChar(200)
+  document_file String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model MarkGrades {
+  id              Int      @id @default(autoincrement())
+  name            String
+  percentage_from Int
+  percentage_to   Int
+  created_by      Role     @default(Admin)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
+model MarksRegister {
+  id         Int      @id @default(autoincrement())
+  student_id Int
+  user       User     @relation(fields: [student_id], references: [id])
+  exam_id    Int
+  exam       Exam     @relation(fields: [exam_id], references: [id])
+  class_id   Int
+  class      Class    @relation(fields: [class_id], references: [id])
+  subject_id Int
+  subject    Subject  @relation(fields: [subject_id], references: [id])
+  class_work Int
+  home_work  Int
+  test       Int
+  exam_score Int
+  full_marks Int
+  pass_marks Int
+  created_by Role     @default(Admin)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model NoticeBoard {
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  notice_date        DateTime
+  publish_date       DateTime
+  message            String               @db.VarChar(500)
+  created_by         Role                 @default(Admin)
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  NoticeBoardMessage NoticeBoardMessage[]
+}
+
+model NoticeBoardMessage {
+  id              Int         @id @default(autoincrement())
+  notice_board_id Int
+  notice_board    NoticeBoard @relation(fields: [notice_board_id], references: [id])
+  message_to      Role        @default(Admin)
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+}
+
+model StudentFee {
+  id                    Int         @id @default(autoincrement())
+  student_id            Int
+  user                  User        @relation(fields: [student_id], references: [id])
+  class_id              Int
+  class                 Class       @relation(fields: [class_id], references: [id])
+  total_amount          Decimal
+  amount_paid           Decimal
+  transaction_reference String
+  Payment_reference     String
+  balance               Decimal
+  payment_type          PaymentType @default(Cash)
+  remark                String
+  is_paid               Boolean     @default(false)
+  payment_data          String      @db.VarChar(200)
+  created_by            Role        @default(Admin)
+  created_at            DateTime    @default(now())
+  updated_at            DateTime    @updatedAt
+}
+
+model Setting {
+  id               Int      @id @default(autoincrement())
+  school_name      String   @db.VarChar(80)
+  exam_description String   @db.Text
+  header           String
+  logo             String
+  favicon_icon     String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+}
+
+enum Role {
+  Admin
+  Teacher
+  Student
+  Parent
+}
+
+enum Status {
+  Active
+  Inactive
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+enum MaritalStatus {
+  Single
+  Complecated
+  Engaged
+  Married
+  Divorced
+  Widow
+}
+
+enum PaymentType {
+  Cash
+  Paystack
+  Remita
+}
+
+enum AttendanceType {
+  Present
+  Absent
+  Late
+  Half_Day
+}
+
+enum Religion {
+  Islam
+  Christianity
+}
+
+enum SubjectType {
+  Theory
+  Practical
+}
+
+enum Genotype {
+  AA
+  AC
+  AS
+  CC
+  SC
+  SS
+}
+
+enum BloodGroup {
+  A_POS
+  A_NEG
+  B_POS
+  B_NEG
+  O_POS
+  O_NEG
+  AB_POS
+  AB_NEG
+}

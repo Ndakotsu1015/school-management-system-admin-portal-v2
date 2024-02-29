@@ -1,0 +1,17 @@
+.report{
+    width: 15%;
+    animation-name: expand;
+    animation-duration: 2s;
+}
+
+.prompt{
+    justify-content: center;
+}
+
+@keyframes expand {
+    0% {opacity: 0.2;}
+    25% {opacity: 0.5;}
+    50% {opacity: 1;}
+    75% {opacity: 0.5;}
+    75% {opacity: 0.2;}
+}
