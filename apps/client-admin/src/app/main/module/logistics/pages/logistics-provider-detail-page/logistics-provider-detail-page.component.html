@@ -1,0 +1,430 @@
+
+<div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+<div class="surface-card shadow-1 border-round bg-light mt-4 px-6 py-5">
+  <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+      <li>
+          <a class="text-500 no-underline line-height-3 cursor-pointer">Logistics Provider Detail:</a>
+      </li>
+  </ul>
+  <div *ngIf="!updateMode" class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+      <div>
+          <div class="font-medium text-3xl light-green-font"><strong class="text-900">Provider Name: </strong>{{ logisticsProvider.name }}</div>
+          <div class="flex align-items-center text-700 flex-wrap">
+              <div class="mr-5 flex align-items-center mt-3">
+                  <i class="pi pi-map-marker mr-2"></i>
+                  <span><strong>Provider Office Address:</strong> {{ logisticsProvider.office_address }}</span>
+              </div>
+          </div>
+      </div>
+      <div class="mt-3 lg:mt-0">
+        <button pButton type="button" icon="pi pi-arrow-left" (click)="backbtn()" label="Back"
+        class="p-button-outlined p-button-secondary p-button-raised p-button-rounded mr-2"></button>
+        <button pButton type="button" icon="pi pi-pencil" (click)="onEdit(logisticsProvider)" label="Edit"
+        class="p-button-outlined p-button-raised p-button-rounded p-button-success mr-2"></button>
+      <button pButton type="button" icon="pi pi-trash" (click)="onDelete()" label="Delete"
+        class="p-button-outlined p-button-danger p-button-raised p-button-rounded mr-2"></button>
+      </div>
+  </div>
+  <form [formGroup]="logisticsProviderUpdateForm" *ngIf="updateMode">
+    <h5>Update Details</h5>
+    <div class="formgrid grid">
+      <div class="field col">
+        <span class="p-float-input"><label for="name">Provider Name</label><i class="text-red-500">*</i>
+          <input pInputText type="text" formControlName="name"
+            class="p-inputtext-lg text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </span>
+        <div *ngIf="fc['name'].invalid && fc['name'].touched" class="text-danger">
+          <small class="text-red-500" *ngIf="fc['name'].errors?.['required']">Name is required!</small>
+          <small class="text-red-500" *ngIf="fc['name'].errors?.['minlength']">Name must be atlease 3
+            characters!</small>
+        </div>
+      </div>
+      <div class="field col">
+        <span class="p-float-input"><label for="contact_phone">Office Address</label><i class="text-red-500">*</i>
+          <input type="text" pInputText formControlName="office_address" prefix="%"
+            class="p-inputtext-lg text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+        </span>
+        <div *ngIf="
+            fc['office_address'].invalid &&
+            fc['office_address'].touched
+          " class="text-danger">
+          <small class="text-red-500" *ngIf="fc['office_address'].errors?.['required']">Category office_address is
+            required!</small>
+          <small class="text-red-500" *ngIf="fc['office_address'].errors?.['minlength']">Category office_address must be
+            atlease 3
+            characters!</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="align-items-end">
+      <hr />
+      <button pButton type="button" icon="pi pi-times" (click)="onCancel()" label="Cancel"
+        class="p-button-outlined p-button-primary mr-2"></button>
+
+      <button pButton type="button" icon="pi pi-verified" (click)="onUpdate()" label="Update"
+        class="p-button-success p-button-" [disabled]="
+          logisticsProviderUpdateForm.invalid || loading
+        "></button>
+    </div>
+  </form>
+
+  <div class="surface-card border-1 p-4 shadow-2 border-round mb-4 mr-4 mt-6">
+    <p-tabView styleClass="">
+      <p-tabPanel header="Delivery Order List">
+        <div class="">
+          <!-- <div class="text-3xl font-medium light-green-font mb-3">Customer Order Item List</div> -->
+          <div class="font-medium light-green-font mb-3">List of Delivery Order</div>
+          <div class="border-2 border-dashed surface-border p-3">
+
+            <div class="surface-section">
+              <p-table #dt1 [value]="deliveryOrders" dataKey="id" [rows]="10"
+                [loading]="loading" [rowHover]="true" styleClass="" [paginator]="true" [globalFilterFields]="[
+                'name',
+      'created_at',
+      'updated_at'
+              ]" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Delivery Address
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Estimated Delivery Date
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Date created
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Action
+                      </div>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                  <tr>
+                    <td>
+                      {{ data.deliveryOrder.delivery_address }}
+                    </td>
+                    <td>
+                      {{
+                      data.deliveryOrder.estimated_delivery_date | date: 'MMM y,d'
+                      }}
+                    </td>
+                    <td>
+                      {{
+                      data.deliveryOrder.created_at  | date: 'MMM y,d'
+                      }}
+                    </td>
+                    <td>
+                      <p-badge value="{{data.quantity}}" severity="info" styleClass=""></p-badge>
+
+                    </td>
+                    <td>
+                      <span class="image-text ml-2">{{
+                        data.unit_price * data.quantity
+                        | currency: '&#8358;':true:'1.2-2'
+                        }}</span>
+                    </td>
+                    <td>
+                      <span class="image-text ml-2">
+                        <button pButton pRipple label="View" icon="pi pi-eye" class="p-button-text"
+                          (click)="viewDeliveryOrderRecord(data.deliveryOrder.uid)"></button>
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="8">No Customer Order found.</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                  <tr>
+                    <td colspan="8">
+                      Loading Customer Order. Please wait.
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Logistics Provider Contacts">
+        <div class="">
+          <div class="font-medium light-green-font mb-3">List of Logistics Provider Contacts </div>
+          <div class="border-2 border-dashed surface-border p-3">
+
+            <div class="surface-section">
+              <p-table #dt1 [value]="logisticsProvidersContacts
+              ? logisticsProvidersContacts
+              : []" dataKey="id" [rows]="10"
+                [loading]="loading" [rowHover]="true" styleClass="" [paginator]="true" [globalFilterFields]="[
+                'name',
+      'created_at',
+      'updated_at'
+              ]" responsiveLayout="scroll">
+              <ng-template pTemplate="caption">
+                <div class="flex justify-content-end sm:flex-row">
+                  <button (click)="addNewContactForm()" pButton label="Add new"
+                    class="p-button-raised p-button-primary mb-2" icon="pi pi-plus-circle"></button>
+                  <span class="p-input-icon-left mb-2 mr-2" style="order: -1">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search" class="w-full" />
+                  </span>
+                </div>
+              </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Name
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Contact Phone Number
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Contact E-mail
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Date Created
+                      </div>
+                    </th>
+                    <th style="min-width: 12rem">
+                      <div class="flex justify-content-between align-items-center">
+                        Action
+                      </div>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                  <tr>
+                    <td>
+                      {{data.full_name}}
+                    </td>
+                    <td>
+                      <span class="image-text ml-2">{{
+                        data.contact_phone
+                        }}</span>
+                    </td>
+                    <td>
+                      <span class="image-text ml-2">{{
+                        data.contact_email
+                        }}</span>
+                    </td>
+
+                    <td>
+                      <span class="image-text ml-2">{{
+                        data.created_at | date: 'MMM y,d hh:mm:ss a'
+                        }}</span>
+                    </td>
+                    <td>
+                      <span class="image-text ml-2">
+                        <button pButton type="button" label="View" icon="pi pi-eye" class="p-button-text"
+                          (click)="viewRecord(data);visible2 = true;"></button>
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="8">No Delivery Order found.</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                  <tr>
+                    <td colspan="8">
+                      Loading Delivery Order. Please wait.
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+<!-- end of first card -->
+
+<!-- start second card -->
+
+<!-- end of second card -->
+
+ <p-dialog header="Header" [(visible)]="visible2" [maximizable]="true" [modal]="true" [style]="{ width: '50vw' }">
+        <ng-template pTemplate="header">
+          <span class="text-xl font-bold">Customer Order Item Detail</span>
+        </ng-template>
+        <div class="border-2 border-dashed surface-border p-3">
+          <div class="">
+            <div class="" *ngIf="operation !== ''">
+              <div *ngIf="operation === 'Update' || operation === 'Add'">
+                <h5>Logistics Provider Contact {{ operation }} Form</h5>
+                <form [formGroup]="logisticsProviderContactForm">
+                  <div class="formgrid grid">
+                    <div class="field col">
+                      <span class="p-float-input"><label for="name">Full Name</label><i class="text-red-500">*</i>
+                        <input pInputText type="text" formControlName="full_name"
+                          class="p-inputtext-lg text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+                      </span>
+                      <div *ngIf="
+                          logisticsProviderContactFormControls[
+                            'full_name'
+                          ].invalid &&
+                          logisticsProviderContactFormControls[
+                            'full_name'
+                          ].touched
+                        " class="text-danger">
+                        <small class="text-red-500"
+                          *ngIf="logisticsProviderContactFormControls['full_name'].errors?.['required']">Full Name is
+                          required!</small>
+                      </div>
+                    </div>
+                    <div class="field col">
+                      <span class="p-float-input"><label for="office_address">
+                          Contact Number</label><i class="text-red-500">*</i>
+                        <input type="text" pInputText formControlName="contact_phone" placeholder="08031234567"
+                          class="p-inputtext-lg text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+                      </span>
+                      <div *ngIf="
+                          logisticsProviderContactFormControls[
+                            'contact_phone'
+                          ].invalid &&
+                          logisticsProviderContactFormControls[
+                            'contact_phone'
+                          ].touched
+                        " class="text-danger">
+                        <small class="text-red-500"
+                          *ngIf="logisticsProviderContactFormControls['contact_phone'].errors?.['required']">Contact phone number is
+                          required!</small>
+                        <small class="text-red-500"
+                          *ngIf="logisticsProviderContactFormControls['contact_phone'].errors?.['pattern']">Contact phone number
+                          format is incorrect</small>
+                      </div>
+                    </div>
+                    <div class="field col">
+                      <span class="p-float-input"><label for="office_address">
+                          Contact Email</label><i class="text-red-500">*</i>
+                        <input type="email" pInputText formControlName="contact_email"
+                          class="p-inputtext-lg text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
+                      </span>
+                      <div *ngIf="
+                          logisticsProviderContactFormControls[
+                            'contact_email'
+                          ].invalid &&
+                          logisticsProviderContactFormControls[
+                            'contact_email'
+                          ].touched
+                        " class="text-danger">
+                        <small class="text-red-500"
+                          *ngIf="logisticsProviderContactFormControls['contact_email'].errors?.['required']">Contact Email Address
+                          is required!</small>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="flex justify-content-end w-full">
+                    <button pButton type="button" icon="pi pi-eye" (click)="
+                        gotoPreview(
+                          operation === 'Add'
+                            ? 'preview'
+                            : 'update preview'
+                        )
+                      " label="Preview" class="p-button-outlined p-button-primary"
+                      [disabled]="logisticsProviderContactForm.invalid"></button>
+                  </div>
+                </form>
+            
+                <br />
+              </div>
+              <div *ngIf="
+                  operation === 'view' ||
+                  operation === 'update preview' ||
+                  operation === 'preview'
+                ">
+                <h5>Logistics Provider Contact Detail</h5>
+                <div class="grid">
+                  <div class="col">
+                    <span class="light-green-font"><label for="name">Provider Name:</label><i class="text-red-500"></i>
+                    </span>
+                    <div class="mt-3">
+                      <h6>
+                        {{ logisticsProviderContact.full_name }}
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span class="light-green-font"><label for="name">Contact Number:</label><i class="text-red-500"></i>
+                    </span>
+                    <div class="mt-3">
+                      <h6>
+                        {{ logisticsProviderContact.contact_phone }}
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <span class="light-green-font"><label for="name">E-mail Address:</label><i class="text-red-500"></i>
+                    </span>
+                    <div class="mt-3">
+                      <h6>
+                        {{ logisticsProviderContact.contact_email }}
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="flex justify-content-between">
+                  <!-- <div>
+                    <button pButton type="button" icon="pi pi-arrow-left" (click)="stepBack()" label="Back"
+                      class="p-button-outlined p-button-primary mr-2"></button>
+                  </div> -->
+                  <div>
+                    <button pButton type="button" icon="pi pi-pencil" (click)="onContactEdit()" label="Edit"
+                      class="p-button-primary p-button-outlined mr-3" *ngIf="operation === 'view'"></button>
+                    <button pButton type="button" icon="pi pi-save" (click)="processForm(); visible2= false" [label]="
+                        operation === 'update preview'
+                          ? 'Update'
+                          : 'Add'
+                      " class="p-button-primary p-button-outlined mr-3" *ngIf="operation !== 'view'"></button>
+                    <p-confirmDialog header="Confirmation" key="confirm1" icon="pi pi-exclamation-triangle"
+                      message="Are you sure you want to proceed?" [style]="{ width: '350px' }"
+                      acceptButtonStyleClass="p-button-text" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+                    <button pButton type="button" icon="pi pi-trash" (click)="onContactDelete()" label="Delete"
+                      class="p-button-danger p-button-outlined" *ngIf="operation === 'view'"></button>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+
+          <div></div>
+        </div>
+        <ng-template pTemplate="footer">
+          <p-button icon="pi pi-times" (click)="visible2 = false" label="Close"
+            styleClass="p-button-danger p-button-raised"></p-button>
+        </ng-template>
+      </p-dialog>

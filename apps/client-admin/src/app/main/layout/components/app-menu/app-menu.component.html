@@ -1,0 +1,34 @@
+<div style="z-index: 500000 !important;" class="text-left p-2 logo-sec">
+  <a class="layout-topbar-logo" routerLink="/module/dashboard/main">
+    <a class="align-items-center" routerLink="/module/dashboard/main">
+      <span class="logo-container">
+        <img src="assets/layout/images/hacienda-header.png" alt="logo" width="250" class="img-fluid" /></span>
+    </a>
+  </a>
+</div>
+<p-scrollPanel [style]="{ width: '100%', height: '75%' }">
+  <ul class="layout-menu">
+  <ng-container *ngFor="let item of model; let i = index">
+    <li
+      app-menuitem
+      *ngIf="!item.separator"
+      [item]="item"
+      [index]="i"
+      [root]="true"
+    ></li>
+    <li *ngIf="item.separator" class="menu-separator"></li>
+  </ng-container>
+</ul>
+</p-scrollPanel>
+
+<ul class="logout-menu menu-container pr-5 pt-1">
+  <ng-container *ngFor="let item of model2; let i = index">
+    <li style="margin-bottom: -20px !important;"
+      app-menuitem
+      *ngIf="!item.separator"
+      [item]="item"
+      [index]="i"
+      [root]="true"
+    ></li>
+  </ng-container>
+</ul>

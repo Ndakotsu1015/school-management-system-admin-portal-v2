@@ -1,0 +1,98 @@
+<div class="">
+  <div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+    <div class="mb-4 flex pt-0">
+      <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+      <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+    </div>
+  </div>
+
+<div class="surface-card shadow-1 p-4 border-round bg-light mt-4">
+    <h3 class="text text-primary p-shadow-1 font-bold"> Add User</h3>
+        <form [formGroup]="userForm" (ngSubmit)="addUser()">
+  
+            <div class="">
+                <div class="formgrid grid">
+                        <div class="field col-12 md:col-6">
+                            <label for="fullname"><b>Full Name</b> <span class="p-error"> *</span></label>
+                            <input id="full_name" type="text" formControlName="full_name"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required>
+                            <small class="p-error" *ngIf="userFormControls['full_name'].errors?.['required']
+                            && userFormControls['full_name'].touched">
+                              Full Name is required
+                            </small>
+                            <br>
+                         </div>
+  
+                         <div class="field col-12 md:col-6">
+                            <label for="email"><b>Email Address</b><span class="p-error"> *</span></label>
+                            <input id="uid" type="email" formControlName="email"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required>
+                            <small class="p-error" *ngIf="userFormControls['email'].errors?.['required']
+                            && userFormControls['email'].touched">
+                              Email is required
+                            </small>
+                            <small class="p-error" *ngIf="userFormControls['email'].errors?.['email']
+                            && userFormControls['email'].touched">
+                              Must be a valid email address
+                            </small>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="password"><b>Password</b><span class="p-error"> *</span></label>
+                            <input id="password" type="password" formControlName="password"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required>
+                            <small class="p-error" *ngIf="userFormControls['password'].errors?.['required']
+                            && userFormControls['password'].touched">
+                              Password is required
+                            </small>
+                            <small class="p-error" *ngIf="userFormControls['password'].errors?.['mustMatch']
+                            && userFormControls['password'].touched">
+                              Password must match
+                            </small>
+                            <small class="p-error" *ngIf="userFormControls['password'].errors?.['minlength']
+                            && userFormControls['password'].touched">
+                              Password must be at least 8 characters
+                            </small>
+                            
+  
+                        </div>
+                            <div class="field col-12 md:col-6">
+                                <label for="confirm_password"><b>Confirm Password</b> <span class="p-error"> *</span></label>
+                                <input id="confirm_password" type="password" formControlName="confirm_password"
+                                class="text-base text-color surface-overlay
+                                p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                                focus:border-primary w-full"
+                                required>
+                                <small class="p-error" *ngIf="userFormControls['confirm_password'].errors?.['required']
+                            && userFormControls['confirm_password'].touched">
+                              Confirm Password is required
+                            </small>
+                                <small class="p-error" *ngIf="userFormControls['confirm_password'].errors?.['mustMatch']
+                            && userFormControls['confirm_password'].touched">
+                              Password must match
+                            </small>
+                            <small class="p-error" *ngIf="userFormControls['confirm_password'].errors?.['minlength']
+                            && userFormControls['confirm_password'].touched">
+                              Password must be at least 8 characters
+                            </small>
+                             </div>
+                             </div>
+                        
+                        <hr style="color: blue;">
+                       <div class="flex justify-content-end">
+                        <button pButton type="submit" label="Submit" class="p-button-primary ml-12 justify-self-right"
+                          icon="pi pi-user-plus" [disabled]="!canSubmit"></button>
+                       </div>
+                 </div>
+        </form>
+  </div>

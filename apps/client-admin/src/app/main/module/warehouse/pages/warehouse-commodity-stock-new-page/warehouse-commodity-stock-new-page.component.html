@@ -1,0 +1,158 @@
+
+<!--  -->
+<div class="grid">
+  <div class="col-12 md:col-12">
+    <div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+      <div class="mb-4 flex pt-0">
+        <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+          styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+        </p-button>
+        <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+      </div>
+    </div>
+
+    <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-4">
+      <div class="col-12">
+        <div class="pt-2">
+          <div class="light-green-font text-2xl mb-1 font-medium">
+            <strong>Add New Warehouse</strong>
+          </div>
+          <br>
+          <form class="form" [formGroup]="stockForm">
+            <div class="p-fluid p-formgrid grid">
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="name">Select Warehouse</label>
+                <p-dropdown
+                  [options]="warehouseList"
+                  [class.is-invalid]="
+                    fc['warehouse'].invalid &&
+                    fc['warehouse'].touched
+                  "
+                  bindLabel="name"
+                  name="warehouse"
+                  id="warehouse"
+                  placeholder="Select Warehouse . . ."
+                  bindValue="id"
+                  formControlName="warehouse"
+                  optionLabel="name"
+                ></p-dropdown>
+                <div
+                  *ngIf="
+                    fc['warehouse'].invalid &&
+                    fc['warehouse'].touched
+                  "
+                >
+                  <small
+                    *ngIf="fc['warehouse'].errors?.['required']"
+                    class="p-error blockr"
+                    >Warehouse Stock is Required</small
+                  >
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="commodityVariant">Commodity Variant</label>
+                <p-dropdown
+                    [options]="commodityVariantList"
+                    [class.is-invalid]="
+                      stockForm.controls['commodityVariant'].invalid &&
+                      stockForm.controls['commodityVariant'].touched
+                    "
+                    bindLabel="name"
+                    name="commodityVariant"
+                    id="commodityVariant"
+                    placeholder="Select Commodity Variant . . ."
+                    bindValue="id"
+                    formControlName="commodityVariant"
+                    optionLabel="name"
+                  ></p-dropdown>
+                  <div
+                    *ngIf="
+                      stockForm.controls['commodityVariant'].invalid &&
+                      stockForm.controls['commodityVariant'].touched
+                    "
+                  >
+                    <small
+                      *ngIf="stockForm.controls['commodityVariant'].errors?.['required']"
+                      class="p-error blockr"
+                      >Commodity Variant is Required</small
+                    >
+                  </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="commodityVariant">Restock target level</label>
+                <input
+                    pInputText
+                    id="user-group-name"
+                    type="number"
+                    placeholder=""
+                    formControlName="restockLevel"
+                    [class.ng-invalid]="
+                      fc['restockLevel'].invalid &&
+                      fc['restockLevel'].touched
+                    "
+                  />
+                  <div
+                  *ngIf="
+                    fc['restockLevel'].invalid &&
+                    fc['restockLevel'].touched
+                  "
+                  class="p-error block"
+                >
+                  <small
+                    id="username2-help"
+                    class="p-error block"
+                    *ngIf="fc['restockLevel'].errors?.['required']"
+                  >
+                    This field is required
+                  </small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="commodityVariant">Holding target level</label>
+                <input
+                    pInputText
+                    id="user-group-name"
+                    type="number"
+                    placeholder=""
+                    formControlName="holdingLevel"
+                    [class.ng-invalid]="
+                      fc['holdingLevel'].invalid &&
+                      fc['holdingLevel'].touched
+                    "
+                  />
+                  <div
+                  *ngIf="
+                    fc['holdingLevel'].invalid &&
+                    fc['holdingLevel'].touched
+                  "
+                  class="p-error block"
+                >
+                  <small
+                    id="username2-help"
+                    class="p-error block"
+                    *ngIf="fc['holdingLevel'].errors?.['required']"
+                  >
+                    This field is required
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+            <div>
+              <div class="flex align-items-center text-700 flex-wrap">
+              </div>
+            </div>
+            <div class="mt-3 lg:mt-0">
+              <button pButton pRipple label="Cancel" class="p-button-outlined p-button-raised p-button-secondary mr-2"
+                icon="pi pi-times" (click)="listPage()"></button>
+              <button class="p-button-raised" (click)="save()" pButton pRipple label="Save" icon="pi pi-check"
+                [disabled]="stockForm.invalid"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

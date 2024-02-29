@@ -1,0 +1,83 @@
+
+
+<div class="grid">
+  <div class="col-12 md:col-12">
+    <div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+      <div class="mb-4 flex pt-0">
+        <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+          styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+        </p-button>
+        <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+      </div>
+    </div>
+
+    <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-4">
+      <div class="col-12">
+        <div class="pt-2">
+          <div class="light-green-font text-2xl mb-1 font-medium">
+            <strong>Add New Commodity Category</strong>
+          </div>
+          <br>
+          <form class="form" [formGroup]="commodityCategoryForm">
+            <div class="p-fluid p-formgrid grid">
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="name">Category Name</label>
+                <input pInputText id="name" type="text" placeholder="Enter Category Name"
+                  formControlName="name" [class.ng-invalid]="
+                      commodityCategoryForm.controls['name'].invalid &&
+                      commodityCategoryForm.controls['name'].touched
+                    " />
+                <div *ngIf="
+                    commodityCategoryForm.controls['name'].invalid &&
+                    commodityCategoryForm.controls['name'].touched
+                  " class="p-error block">
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityCategoryForm.controls['name'].errors?.['required']">
+                    This field is required
+                  </small>
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityCategoryForm.controls['name'].errors?.['minlength']">
+                    Character must be at least 3
+                  </small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="description">Category Description</label>
+                <input pInputText id="description" type="text" placeholder="Enter Category Description" formControlName="description"
+                  [class.ng-invalid]="
+                      commodityCategoryForm.controls['description'].invalid &&
+                      commodityCategoryForm.controls['description'].touched
+                    " />
+                <div *ngIf="
+                    commodityCategoryForm.controls['description'].invalid &&
+                    commodityCategoryForm.controls['description'].touched
+                  " class="p-error block">
+                  <small id="description" class="p-error block"
+                    *ngIf="commodityCategoryForm.controls['description'].errors?.['required']">
+                    This field is required
+                  </small>
+                  <small id="description" class="p-error block"
+                    *ngIf="commodityCategoryForm.controls['description'].errors?.['minlength']">
+                    Character must be at least 3
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+            <div>
+              <div class="flex align-items-center text-700 flex-wrap">
+              </div>
+            </div>
+            <div class="mt-3 lg:mt-0">
+              <button pButton pRipple label="Cancel" class="p-button-outlined p-button-raised p-button-secondary mr-2"
+                icon="pi pi-times" (click)="goBack()"></button>
+              <button class="p-button-raised" pButton pRipple label="Save" (click)="save()" icon="pi pi-check"
+                [disabled]="commodityCategoryForm.invalid"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

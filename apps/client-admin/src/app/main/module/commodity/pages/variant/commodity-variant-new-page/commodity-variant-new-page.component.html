@@ -1,0 +1,133 @@
+<div class="grid">
+  <div class="col-12 md:col-12">
+    <div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+      <div class="mb-4 flex pt-0">
+        <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+          styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+        </p-button>
+        <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+      </div>
+    </div>
+
+    <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-4">
+      <div class="col-12">
+        <div class="pt-2">
+          <div class="light-green-font text-2xl mb-1 font-medium">
+            <strong>Add New Commodity Variant</strong>
+          </div>
+          <br>
+          <form class="form" [formGroup]="commodityVariantForm">
+            <div class="p-fluid p-formgrid grid">
+              <div class=" col-12 md:col-12">
+                <div class="flex align-content-center w-5">
+                  <div class="h-full flex flex-column surface-card" style="border-radius: 6px">
+                    <div class="deep-green-font font-bold mb-2">
+                      Image Upload
+                    </div>
+                    <div class="text-600 mb-3">
+                      Allowed JPG, GIF or PNG. Max size of
+                      800kB
+                    </div>
+                    <img *ngIf="uploadedImage !== ''" style="border-radius: 6px; height: 250px; width: 250px;"
+                      class="border rounded shadow-sm p-25 img-fix-h img-fit img-fluid mb-2 p-link shadow-2"
+                      [src]="uploadedImage" onError="this.src='assets/images/noimage.gif';" alt="Commodity Image" />
+                    <button pButton pRipple label="Upload Image" (click)="imageFile.click()"
+                      class="p-3 w-full mt-auto p-button-info p-button-raised"></button>
+                    <input type="file" #imageFile name="ImageUpload" id="ImageUpload" hidden accept="image/*" (change)="
+                        handleFileInputUploadImage($event)
+                      " />
+                  </div>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="name">Commodity Name</label>
+                <input pInputText id="name" type="text" placeholder="Enter Commodity Variant Name"
+                  formControlName="name" [class.ng-invalid]="
+                      commodityVariantForm.controls['name'].invalid &&
+                      commodityVariantForm.controls['name'].touched
+                    " />
+                <div *ngIf="
+                    commodityVariantForm.controls['name'].invalid &&
+                    commodityVariantForm.controls['name'].touched
+                  " class="p-error block">
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityVariantForm.controls['name'].errors?.['required']">
+                    This field is required
+                  </small>
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityVariantForm.controls['name'].errors?.['minlength']">
+                    Character must be at least 3
+                  </small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="price">Variant Price</label>
+                <input pInputText id="price" type="number" placeholder="Enter Variant Price" formControlName="price"
+                  [class.ng-invalid]="
+                      commodityVariantForm.controls['price'].invalid &&
+                      commodityVariantForm.controls['price'].touched
+                    " />
+                <div *ngIf="
+                    commodityVariantForm.controls['price'].invalid &&
+                    commodityVariantForm.controls['price'].touched
+                  " class="p-error block">
+                  <small id="price" class="p-error block"
+                    *ngIf="commodityVariantForm.controls['price'].errors?.['required']">
+                    This field is required
+                  </small>
+                  <small id="price" class="p-error block"
+                    *ngIf="commodityVariantForm.controls['price'].errors?.['minlength']">
+                    Character must be at least 3
+                  </small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="commodity">Select Commodity</label>
+                <p-dropdown [options]="commodities" [class.is-invalid]="
+                      commodityVariantForm.controls['commodity'].invalid &&
+                      commodityVariantForm.controls['commodity'].touched
+                    " bindLabel="name" name="commodity" id="commodity" placeholder="Select commodity . . ."
+                  bindValue="id" formControlName="commodity" optionLabel="name"></p-dropdown>
+                <div *ngIf="
+                      commodityVariantForm.controls['commodity'].invalid &&
+                      commodityVariantForm.controls['commodity'].touched
+                    ">
+                  <small *ngIf="commodityVariantForm.controls['commodity'].errors?.['required']"
+                    class="p-error blockr">Commodity is Required</small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="measuring_unit">Select Measuring Unit</label>
+                <p-dropdown [options]="measuringUnits" [class.is-invalid]="
+                      commodityVariantForm.controls['measuring_unit'].invalid &&
+                      commodityVariantForm.controls['measuring_unit'].touched
+                    " bindLabel="label" name="measuring_unit" id="measuring_unit"
+                  placeholder="Select Measuring Unit . . ." bindValue="uid" formControlName="measuring_unit"
+                  optionLabel="label"></p-dropdown>
+                <div *ngIf="
+                      commodityVariantForm.controls['measuring_unit'].invalid &&
+                      commodityVariantForm.controls['measuring_unit'].touched
+                    ">
+                  <small *ngIf="commodityVariantForm.controls['measuring_unit'].errors?.['required']"
+                    class="p-error blockr">Measuring Unit is Required</small>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+            <div>
+              <div class="flex align-items-center text-700 flex-wrap">
+              </div>
+            </div>
+            <div class="mt-3 lg:mt-0">
+              <button pButton pRipple label="Cancel" class="p-button-outlined p-button-raised p-button-secondary mr-2"
+                icon="pi pi-times" (click)="goBack()"></button>
+              <button class="p-button-raised" (click)="save()" pButton pRipple label="Save" icon="pi pi-check"
+                [disabled]="commodityVariantForm.invalid"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

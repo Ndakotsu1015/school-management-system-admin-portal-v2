@@ -1,0 +1,116 @@
+<div class="">
+
+  <div class="flex md:col-12 lg:col-12 m-4">
+    <div class="surface-card shadow-2 p-8 border-round">
+      <div class="flex justify-content-between mb-3">
+        <div class="">
+          <span class="block text-red-500 text-2xl  mb-3">Hacienda Commodity and Exchange Limited</span>
+          <div class="text-900 font-medium  py-2 text-xl">
+            First Floor, Jabi District, Abuja, FCT.
+          </div>
+          <div class="text-700 font-medium">
+            www.heceindaafrica.com
+          </div>
+          <div class="text-700 font-medium">
+            commexch@heceindaafrica.com
+          </div>
+          <div class="text-700  font-medium">
+            info@haceindaafrica.com
+          </div>
+        </div>
+        <div class="align-items-center justify-content-center w-4">
+          <div class="text-center mb-5">
+            <img src="assets/layout/images/hacienda-logo.png" height="100px" alt="logo" />
+            <div class="text-900 text-green-500 font-medium mb-3">HACEINDA <span class="text-primary">AFRICA</span>
+              COMMODITY <span class="text-primary">AND</span> EXCHANGE <span class="text-primary">LIMITED</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <hr class="border-red-500">
+
+      <div class="grid">
+        <div class="col-12 md:col-6 lg:col-8">
+          <span class="text-red-500 font-medium">Bill To </span>
+          <span class="font-medium line-height-3">
+            <p>{{deliveryAddress}}</p>
+          </span>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4  flex justify-content-end">
+          <span class="text-red-500 font-medium">Invoice Date: &nbsp;&nbsp; </span>
+          <span class="font-medium">{{ today | date: 'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+
+      <p-table [value]="items" styleClass="p-datatable-gridlines my-5" [scrollable]="true" scrollHeight="400px"
+        [tableStyle]="{ 'min-width': '30rem' }">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-center custom-header">Description</th>
+            <th class="text-center custom-header">Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.description }}</td>
+            <td class="flex justify-content-end">{{ item.amount }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div class="flex flex-row-reverse flex-wrap">
+        <div class="flex align-items-center justify-content-center font-bold border-round m-2">
+          <div class="flex flex-column">
+
+            <div class="flex align-items-center justify-content-center font-bold border-round">
+              <div class="text-900 font-medium mb-3">Sub Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ totalAmount |
+                currency
+                :
+                '&#8358;'}}</div>
+            </div>
+            <div class="flex align-items-center justify-content-center font-bold border-round">
+              <div class="text-900 font-medium mb-3">VAT 7% &nbsp; {{ vat | currency :
+                '&#8358;'}}</div>
+            </div>
+            <div class="flex align-items-center  justify-content-center font-bold border-round m-2">
+              <div class="text-1000 text-2xl font-medium mb-3">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{
+                (totalAmount +
+                vat) | currency : '&#8358;'}}</div>
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <br><br><br><br>
+      <div class="grid col-12">
+        <div class="flex justify-content-center lg:col-6 xl:col-6 sm:col-12">
+          <div
+            class="border-top-2 border-red-500 w-15rem h-6rem m-2 surface-overlay font-bold flex align-items-center justify-content-center">
+            Sign & Date</div>
+        </div>
+        <div class="flex  justify-content-center lg:col-6 xl:col-6 sm:col-12">
+          <div
+            class="border-top-2 border-red-500 w-15rem h-6rem m-2 surface-overlay font-bold flex align-items-center justify-content-center">
+            Sign & Date</div>
+        </div>
+      </div>
+
+      <div class="flex flex-row flex-wrap m-3">
+        <div class="col-12 md:col-6 lg:col-8">
+          <span class="text-red-500 font-medium">Terms & Condition </span><br>
+          <span class="text-600  font-medium line-height-3">
+            <p> Payment is due within 15 days</p>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

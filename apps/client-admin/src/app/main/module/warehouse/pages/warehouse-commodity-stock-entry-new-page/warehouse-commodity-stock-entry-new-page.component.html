@@ -1,0 +1,74 @@
+<!-- <div class="mb-2">
+  <p-breadcrumb [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+</div>
+<p-card header="Commodity Stock Entry">
+  <div class="card">
+    <h5>New Commodity Stock Entry</h5>
+    <form [formGroup]="commodityStockEntryForm">
+      <div class="grid p-fluid mt-3">
+        <div class="field col-12 md:col-6">
+          <span>
+            <label for="inputtext">Commodity Stock Entry Type</label>
+            <p-dropdown [options]="types" bindLabel="uid"
+              placeholder="Select Commodity Stock Entry Type . . ." bindValue="uid" formControlName="type"
+              optionLabel="name"></p-dropdown>
+
+          </span>
+          <div *ngIf="commodityStockEntryFormControls['type'].invalid && commodityStockEntryFormControls['type'].touched">
+            <span *ngIf="commodityStockEntryFormControls['type'].errors?.['required'] " class="p-error">Category type is required!</span>
+            <span *ngIf="commodityStockEntryFormControls['type'].errors?.['minlength'] " class="p-error">Category name must be atlease 3
+              characters</span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h3 class="mb-5">Add Items</h3>
+
+      <div formArrayName="items">
+        <div class="p-fluid p-formgrid grid" *ngFor="let item of commodityStockEntryFormItemsControls; let i = index " [formArrayName]="i">
+          <div class="flex justify-content-center w-full" *ngIf="i != 0">
+            <hr style="width:98%">
+          </div>
+            <div class="field col-12 md:col-4">
+                <label for="user-group-name">Quantity Supplied</label>
+                <p-inputNumber  mode="decimal" formControlName="quantity_supplied" [minFractionDigits]="0"></p-inputNumber>
+            </div>
+            <div class="field col-12 md:col-4">
+              <label for="user-group-name">Unit Price</label>
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">₦</span>
+                <p-inputNumber mode="decimal" formControlName="unit_price" [minFractionDigits]="0"></p-inputNumber>
+                <span class="p-inputgroup-addon">.00</span>
+              </div>
+
+            </div>
+            <div class="field col-12 md:col-4">
+              <label for="user-group-name">Commodity Stock</label>
+              <p-dropdown [options]="commodityStocks" bindLabel="uid" [virtualScroll]="true"
+              [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [virtualScrollItemSize]="20"
+                bindValue="uid" placeholder="Select Commodity Stock . . ."
+                bindValue="uid" formControlName="commodity_stock_uid">
+              </p-dropdown>
+            </div>
+
+          </div>
+
+
+      </div>
+      <div class="flex justify-content-end mb-3">
+        <button pButton type="button" icon="pi pi-minus" class="mr-5 p-button-outlined p-button-danger p-button-rounded"
+          (click)="removeItemForm()" [disabled]="itemslastIndex == 1"></button>
+        <button pButton type="button" icon="pi pi-plus"
+          class="mr-5 p-button-outlined p-button-success p-button-rounded" (click)="addItemForm()"
+          [disabled]="commodityStockEntryFormItemsControls[itemslastIndex -1].invalid"></button>
+      </div>
+      <hr>
+      <div class="flex justify-content-end w-full">
+
+        <button pButton type="submit" icon="pi pi-save" label="Save" (click)="onSubmit()"
+          class="p-button-outlined p-button-primary" [disabled]="commodityStockEntryForm.invalid"></button>
+      </div>
+    </form>
+  </div>
+
+</p-card> -->

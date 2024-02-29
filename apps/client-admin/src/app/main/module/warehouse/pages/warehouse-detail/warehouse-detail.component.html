@@ -1,0 +1,303 @@
+<p-confirmDialog
+  header="Confirmation"
+  key="confirm1"
+  icon="pi pi-exclamation-triangle"
+  message="Are you sure you want to proceed?"
+  [style]="{ width: '350px' }"
+  acceptButtonStyleClass="p-button-text"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
+<div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+<div class="pt-2">
+  <div class="surface-card shadow-1 border-round bg-light mt-3">
+    <div *ngIf="!operation || operation === 'Update'" class="p-5">
+      <div>
+        <div class="black-font text-2xl mb-4">
+          <strong>Wareshouse Details</strong>
+        </div>
+        <hr>
+        <ul class="list-none p-0 m-0">
+          <div class="light-green-font text-2xl mt-4 mb-3">
+            <strong>Wareshouse Information</strong>
+          </div>
+          <li class="flex align-items-center py-1 surface-border flex-wrap">
+            <div class="black-font w-6 md:w-3 font-medium">
+              <strong>Wareshouse Name:</strong>
+            </div>
+            <div class="light-green-font w-full md:w-9 md:flex-order-0 flex-order-1">
+              <p class="">{{ updateWarehouseDto?.name ?? 'Not set yet'}}</p>
+            </div>
+          </li>
+          <li class="flex align-items-center py-1 surface-border flex-wrap">
+            <div class="black-font w-6 md:w-3 font-medium">
+              <strong>Wareshouse Address:</strong>
+            </div>
+            <div class="light-green-font w-full md:w-9 md:flex-order-0 flex-order-1">
+              <p class="">{{ updateWarehouseDto?.address }},
+                {{ selectedLga?.name }}</p>
+            </div>
+          </li>
+          <li class="flex align-items-center py-1 surface-border flex-wrap">
+            <div class="black-font w-6 md:w-3 font-medium">
+              <strong>Warehouse Type:</strong>
+            </div>
+            <div class="light-green-font w-full md:w-9 md:flex-order-0 flex-order-1">
+              <p class="">{{selectedType?.name}}</p>
+            </div>
+          </li>
+          <li class="flex align-items-center py-1 surface-border flex-wrap">
+            <div class="black-font w-6 md:w-3 font-medium">
+              <strong>Warehouse Owner:</strong>
+            </div>
+            <div class="light-green-font w-full md:w-9 md:flex-order-0 flex-order-1">
+              {{
+                selectedOwner?.full_name
+              }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <hr>
+      <div
+      class="pt-2 flex align-items-end justify-content-between w-full"
+    >
+      <button
+        pButton
+        type="button"
+        icon="pi pi-arrow-left"
+        (click)="back()"
+        label="Go Back"
+        class="p-button-outlined p-button-secondary p-button-raised p-button-rounded mr-2"
+      ></button>
+
+      <div>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-trash"
+          (click)="delete()"
+          class="p-button-outlined p-button-danger p-button-raised p-button-rounded mr-2"
+          label="Delete"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          (click)="processRequest()"
+          [label]="
+            operation === 'Update' ? operation : 'Edit'
+          "
+          class="p-button-outlined p-button-raised p-button-rounded p-button-success"
+        ></button>
+      </div>
+    </div>
+    </div>
+    <div
+    class="p-4"
+    header="Warehouse"
+    *ngIf="operation === 'Edit'"
+  >
+    <div class="light-green-font text-2xl mb-1 font-medium">
+      <strong>Update Warehouse</strong>
+    </div>
+    <br>
+    <form class="form" [formGroup]="warehouseForm">
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label class="deep-green-font font-bold" for="name">Warehouse Name</label>
+            <input
+              pInputText
+              id="user-group-name"
+              type="text"
+              placeholder=""
+              formControlName="name"
+              [class.ng-invalid]="
+                warehouseFormControls['name'].invalid &&
+                warehouseFormControls['name'].touched
+              "
+            />
+          <div
+            *ngIf="
+              warehouseFormControls['name'].invalid &&
+              warehouseFormControls['name'].touched
+            "
+            class="p-error block"
+          >
+            <small
+              id="username2-help"
+              class="p-error block"
+              *ngIf="warehouseFormControls['name'].errors?.['required']"
+            >
+              This field is required
+            </small>
+            <small
+              id="username2-help"
+              class="p-error block"
+              *ngIf="warehouseFormControls['name'].errors?.['minlength']"
+            >
+              Characters must be at least 3
+            </small>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label class="deep-green-font font-bold" for="user-group-name"
+              >Warehouse Address</label
+            >
+            <input
+              pInputText
+              id="user-group-name"
+              type="text"
+              placeholder=""
+              formControlName="address"
+              [class.ng-invalid]="
+                warehouseFormControls['address'].invalid &&
+                warehouseFormControls['address'].touched
+              "
+            />
+          <div
+            *ngIf="
+              warehouseFormControls['name'].invalid &&
+              warehouseFormControls['name'].touched
+            "
+            class="p-error block"
+          >
+            <small
+              id="username2-help"
+              class="p-error block"
+              *ngIf="warehouseFormControls['name'].errors?.['required']"
+            >
+              This field is required
+            </small>
+            <small
+              id="username2-help"
+              class="p-error block"
+              *ngIf="warehouseFormControls['name'].errors?.['minlength']"
+            >
+              Characters must be at least 3
+            </small>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label  class="deep-green-font font-bold" for="user-group-name"
+            >Warehouse Owner</label
+          >
+          <p-dropdown
+            [options]="warehouseOwners"
+            [class.is-invalid]="
+              warehouseForm.controls['owner'].invalid &&
+              warehouseForm.controls['owner'].touched
+            "
+            name="owner"
+            id="owner"
+            optionValue="uid"
+            formControlName="owner"
+            optionLabel="full_name"
+          ></p-dropdown>
+          <div
+            *ngIf="
+              warehouseForm.controls['owner'].invalid &&
+              warehouseForm.controls['owner'].touched
+            "
+          >
+            <small
+              *ngIf="warehouseForm.controls['owner'].errors?.['required']"
+              class="p-error blockr"
+              >Warehouse owner is Required</small
+            >
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label class="deep-green-font font-bold" for="user-group-name"
+            >Warehouse Type</label
+          >
+          <p-dropdown
+            [options]="warehouseTypes"
+            [class.is-invalid]="
+              warehouseForm.controls['type'].invalid &&
+              warehouseForm.controls['type'].touched
+            "
+            bindLabel="name"
+            id="name"
+            optionValue="uid"
+            formControlName="type"
+            optionLabel="name"
+          ></p-dropdown>
+          <div
+            *ngIf="
+              warehouseForm.controls['type'].invalid &&
+              warehouseForm.controls['type'].touched
+            "
+          >
+            <small
+              *ngIf="warehouseForm.controls['type'].errors?.['required']"
+              class="p-error blockr"
+              >Warehouse Type is Required</small
+            >
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label class="deep-green-font font-bold" for="user-group-name"
+            >Warehouse State</label
+          >
+          <p-dropdown
+            [options]="geoLgas"
+            [class.is-invalid]="
+              warehouseForm.controls['geoLga'].invalid &&
+              warehouseForm.controls['geoLga'].touched
+            "
+            bindLabel="name"
+            name="name"
+            id="name"
+            placeholder="Select Warehouse geoLga . . ."
+            bindValue="id"
+            formControlName="geoLga"
+            optionLabel="name"
+          ></p-dropdown>
+          <div
+            *ngIf="
+              warehouseForm.controls['geoLga'].invalid &&
+              warehouseForm.controls['geoLga'].touched
+            "
+          >
+            <small
+              *ngIf="warehouseForm.controls['geoLga'].errors?.['required']"
+              class="p-error blockr"
+              >Warehouse LGA Location is Required</small
+            >
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="flex justify-content-between w-full">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-arrow-left"
+          (click)="closeForm()"
+          label="Go Back"
+          class="p-button-outlined p-button-secondary p-button-raised p-button-rounded mr-2"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-eye"
+          label="Preview"
+          (click)="preview()"
+          class="p-button-outlined p-button-raised p-button-rounded p-button-success"
+          [disabled]="warehouseForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,563 @@
+<!-- Dialog start -->
+<!-- <p-confirmdialog [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"></p-confirmdialog> -->
+<p-confirmDialog [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<!-- Dialog end -->
+<div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+<div class="surface-card shadow-1 px-4 py-4 border-round bg-light mt-4" *ngIf="!updateMode">
+
+  <div>
+    <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+      <div>
+        <h3 class="light-green-font"><strong>Customer Order Detail</strong></h3>
+      </div>
+      <div style="margin-top: -10px !important;" class="">
+        <button pButton type="button" icon="pi pi-arrow-left" (click)="goBack()" label="Go Back"
+          class="p-button-outlined p-button-secondary p-button-raised p-button-rounded mr-2"></button>
+        <button *ngIf="
+          data?.status === 'pending' ||
+          data?.status === 'processing' && !is_order_completed
+        " pRipple pButton type="button" label="Initiate Delivery Order" (click)="initiateDeliveryOrder()"
+          class="p-button-success p-button-raised p-button-rounded" icon="pi pi-spin pi-spinner"
+          iconPos="right"></button>
+      </div>
+    </div>
+    <!-- <hr> -->
+
+    <div class="surface-ground pt-4 pl-5 border-1 shadow-1 border-round">
+      <div class="grid">
+        <div class="col-12 md:col-6 lg:col-6">
+          <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Customer Order Number:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p-badge value="{{data?.order_no}}" severity="info" styleClass="px-3"></p-badge>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Customer Name:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.customer_full_name}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Mobile Number:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.customer_phone_number}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Customer Email Address:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.customer_email}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Payment Status:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p-badge value="{{data?.is_paid ? 'Paid' : 'Not Paid'}}" severity="info" styleClass="px-3"></p-badge>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6">
+          <ul class="list-none p-0 m-0">
+
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Amount Payable:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.amount_payable
+                  | currency: '&#8358;':true:'1.2-2'}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Amount Paid:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.amount_paid
+                  | currency: '&#8358;':true:'1.2-2'}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Order Notes:</strong>
+              </div>
+              <div class="text-500 w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.order_notes ?? '(not set)'}}</p>
+              </div>
+            </li>
+            <li class="flex align-items-center py-1 surface-border flex-wrap">
+              <div class="deep-green-font w-6 md:w-5 font-medium">
+                <strong>Created At:</strong>
+              </div>
+              <div class="light-green-font w-full md:w-7 md:flex-order-0 flex-order-1">
+                <p class="">{{data?.created_at | date: 'MMM y,d hh:mm:ss a'}}</p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        <hr>
+        <!-- <div class="flex align-items-end justify-content-between w-full pl-3 mb-4">
+
+          <button *ngIf="
+          data?.status === 'pending' ||
+          data?.status === 'processing' && !is_order_completed
+        " pRipple pButton type="button" label="Initiate Delivery Order" (click)="initiateDeliveryOrder()"
+            class="p-button-outlined p-button-success p-button-raised p-button-rounded" icon="pi pi-spin pi-spinner"
+            iconPos="right"></button>
+
+          <div>
+            <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        (click)="deleteWarehouseOwner()"
+        class="p-button-outlined p-button-danger p-button-raised p-button-rounded mr-2"
+        label="Delete"
+      ></button>
+      <button
+        pButton
+        type="button"
+        [icon]="operation ==='Update'? 'pi pi-save': 'pi pi-pencil'" (click)="processRequest()"
+        class="p-button-outlined p-button-success p-button-raised p-button-rounded"
+        [label]="operation === 'Update'? operation: 'Edit'"
+      ></button>
+          </div>
+        </div> -->
+      </div>
+
+      <p-dialog header="Header" [(visible)]="visible2" [maximizable]="true" [modal]="true" [style]="{ width: '50vw' }">
+        <ng-template pTemplate="header">
+          <span class="text-xl font-bold">Customer Order Item Detail</span>
+        </ng-template>
+        <div class="border-2 border-dashed surface-border p-3">
+          <div class="grid">
+            <ng-container *ngIf="item">
+              <div class="col-8 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-tag mr-1"></i>Variant Name:
+                </div>
+                <span class="text-900 line-height-3">{{
+                  variantName
+                  }}</span>
+              </div>
+              <div class="col-8 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-database mr-1"></i>Quanity:
+                </div>
+                <span class="text-900 line-height-3">{{ item.quantity }} ({{
+                  item.commodityVariant?.measuringUnit
+                  ?.symbol ?? 'units'
+                  }})</span>
+              </div>
+              <div class="col-8 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-money-bill mr-1"></i>Unit price:
+                </div>
+                <span class="text-900 line-height-3">{{
+                  item.unit_price
+                  | currency: '&#8358;':true:'1.2-2'
+                  }}</span>
+              </div>
+
+              <div class="col-8 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-money-bill mr-1"></i>Total
+                  Amount:
+                </div>
+                <span class="text-900 line-height-3">{{
+                  item.unit_price * item.quantity
+                  | currency: '&#8358;':true:'1.2-2'
+                  }}</span>
+              </div>
+
+              <div class="col-12 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-calendar mr-1"></i> Created At:
+                </div>
+                <span class="text-900 line-height-3">{{
+                  item.created_at | date: 'MMM d,y hh:mm:ss a'
+                  }}</span>
+              </div>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                <div class="text-700 mb-1 font-medium light-green-font">
+                  <i class="pi pi-calendar mr-1"></i>Update Date
+                </div>
+                <span class="text-900 line-height-3">{{
+                  item.updated_at | date: 'MMM y,d hh:mm:ss a'
+                  }}</span>
+              </div>
+            </ng-container>
+          </div>
+
+          <div></div>
+        </div>
+        <ng-template pTemplate="footer">
+          <p-button icon="pi pi-times" (click)="visible2 = false" label="Close"
+            styleClass="p-button-danger p-button-raised"></p-button>
+        </ng-template>
+      </p-dialog>
+
+      <p-dialog header="Header" [(visible)]="visible3" [modal]="true" [maximizable]="true" [style]="{ width: '70vw' }">
+        <ng-template pTemplate="header">
+          <span class="text-xl font-bold">Delivery Order Item Detail</span>
+        </ng-template>
+
+      <div class="border-2 border-dashed surface-border mt-3 p-3 col-12">
+        <p-messages *ngIf="deliveryInformation?.is_delivery_charges_paid" [(value)]="msgs" [enableService]="false" [closable]="false"></p-messages>
+        <div class="card">
+          <p-virtualScroller [value]="deliveryOrderItems" scrollHeight="250px" [itemSize]="100">
+              <ng-template pTemplate="header"> List of Delivery Items </ng-template>
+              <ng-template let-item pTemplate="item">
+                  <div class="flex align-items-center p-3 w-full flex-wrap">
+                      <div>
+                          <img [src]=" imagePrefix + item.commodityVariant.image_file " [alt]="item?.commodityVariant?.name" class="mr-3 w-4rem md:w-7rem shadow-2" />
+                      </div>
+                      <div class="flex-1">
+                          <h5 class="mb-2 text-base">{{ item?.commodityVariant?.name }}</h5>
+                          <i class="pi pi-money-bill hidden md:inline vertical-align-middle mr-2"></i>
+                          <span class="hidden md:inline-flex vertical-align-middle mr-2">{{ item?.commodityVariant?.price | currency: '&#8358;':true:'1.2-2'}}/unit</span>
+                      </div>
+                      <div class="flex flex-column align-items-end">
+                          <h6 style=" height:14px;" class="mb-2">{{ item?.commodityVariant?.price * item?.quantity | currency: '&#8358;':true:'1.2-2'}}</h6>
+                          <span class="mb-2">for {{ item?.quantity }} ({{item.commodityVariant?.measuringUnit
+                            ?.symbol ?? 'units' }})</span>
+                          <p-tag value="LOWSTOCK" severity="warning"></p-tag>
+                      </div>
+                  </div>
+              </ng-template>
+          </p-virtualScroller>
+        </div>
+        <div class="grid">
+          <div class="col-8 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium light-green-font">
+              Delivery Status:
+            </div>
+            <p-tag class="capitalize" value="{{deliveryInformation?.status}}" severity="info"></p-tag>
+          </div>
+          <div class="col-12 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium light-green-font">
+              <i class="pi pi-phone mr-1"></i>Distance in KM
+            </div>
+            <span class="text-900 line-height-3">{{
+              deliveryInformation?.distance_in_km
+              }}</span>
+          </div>
+          <div class="col-12 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium light-green-font">
+              <i class="pi pi-envelope mr-1"></i>Estimate
+              Delivery Date
+            </div>
+            <span class="text-900 line-height-3">{{
+              deliveryInformation?.estimated_delivery_date
+              | date: 'MMM d, y'
+              }}</span>
+          </div>
+
+          <div class="col-8 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium light-green-font">
+              <i class="pi pi-money-bill mr-1"></i>Delivery Payment
+              Status:
+            </div>
+            <!-- <span class="text-900 line-height-3">{{
+              deliveryInformation?.is_delivery_charges_paid
+              ? 'Paid'
+              : 'Not Paid'
+              }}</span> -->
+              <p-tag class="capitalize" value="{{deliveryInformation?.is_delivery_charges_paid ? 'Paid' : 'Not Paid' }}" severity="{{deliveryInformation?.is_delivery_charges_paid ? 'success' : 'danger' }}"></p-tag>
+          </div>
+
+          <div class="col-12 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium light-green-font">
+              <i class="pi pi-money-bill mr-1"></i>Delivery Charges Amount
+            </div>
+            <span class="text-900 line-height-3">{{
+              deliveryInformation?.delivery_charges
+              | currency: '&#8358;':true:'1.2-2'
+              }}</span>
+          </div>
+        </div>
+      </div>
+        <!--  -->
+
+
+        <ng-template pTemplate="footer">
+          <p-button icon="pi pi-times" (click)="visible3 = false" label="Close"
+            styleClass="p-button-danger p-button-raised"></p-button>
+
+          <button *ngIf="deliveryInformation?.status === 'pending'" pRipple pButton type="button"
+            label="Approve Delivery Order" (click)="changeDeliveryStatus('approved')"
+            class="p-button-primary p-button ml-3" icon="pi pi-check-square" iconPos="right"></button>
+
+          <button *ngIf="deliveryInformation?.status === 'approved' && warehouse_has_complete_stock" pRipple pButton
+            type="button" label="Ready For Shipping" (click)="
+            changeDeliveryStatus('ready-for-shipping')
+          " class="p-button-success p-button-outlined ml-3" icon="pi pi-chart-line" iconPos="right"></button>
+
+          <button
+            *ngIf="!warehouse_has_complete_stock && deliveryInformation?.status !== 'pending' && commodity_exists_in_stock && deliveryInformation?.delivery_charges "
+            pRipple pButton type="button" label="Initiate Stock Transfer" (click)="
+            initiateStockTransfer()
+          " class="p-button-success p-button-outlined ml-3" icon="pi pi-chart-line" iconPos="right"></button>
+
+          <button
+            *ngIf="!commodity_exists_in_stock && !warehouse_has_complete_stock && deliveryInformation?.status !== 'pending' && deliveryInformation?.delivery_charges"
+            pRipple pButton type="button" label="Stock Commodity" (click)="
+            initiateStockTransfer()
+          " class="p-button-success p-button-outlined ml-3" icon="pi pi-chart-line" iconPos="right"></button>
+
+          <button *ngIf="
+            deliveryInformation?.status ===
+            'delivery-agent-assigned'
+          " pRipple pButton type="button" label="Shipped" (click)="changeDeliveryStatus('shipped')"
+            class="p-button-success p-button-outlined ml-3" icon="pi pi-chart-line" iconPos="right"></button>
+
+          <button *ngIf="deliveryInformation?.status === 'shipped'" pRipple pButton type="button" label="Delivered"
+            (click)="changeDeliveryStatus('delivered')" class="p-button-success p-button-outlined ml-3"
+            icon="pi pi-chart-line" iconPos="right"></button>
+
+          <button *ngIf="
+            deliveryInformation?.status ===
+            'ready-for-shipping'
+          " pRipple pButton type="button" label="Assign Logistics Provider" (click)="
+            showLogisticsProvider(
+              'ready-for-shipping',
+              'top'
+            )
+          " class="p-button-success p-button-outlined ml-3" icon="pi pi-chart-line" iconPos="right"></button>
+        </ng-template>
+      </p-dialog>
+
+
+      <div class="surface-card p-4 shadow-2 border-round mb-4 mr-4">
+        <p-tabView styleClass="">
+          <p-tabPanel header="Customer ordered items">
+            <div class="">
+              <!-- <div class="text-3xl font-medium light-green-font mb-3">Customer Order Item List</div> -->
+              <div class="font-medium light-green-font mb-3">List of customer ordered items</div>
+              <div class="border-2 border-dashed surface-border p-3">
+
+                <div class="surface-section">
+                  <p-table #dt1 [value]="customerOrderItems ? customerOrderItems : []" dataKey="id" [rows]="10"
+                    [loading]="loading" [rowHover]="true" styleClass="" [paginator]="true" [globalFilterFields]="[
+                    'uid',
+                    'unit_price',
+                    'quantity',
+                    'created_at',
+                    'updated_at'
+                  ]" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Commodity Variant Name
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Unit Price
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Quantity
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Total Amount
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Action
+                          </div>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                      <tr>
+                        <td>
+                          {{ data.commodityVariant?.name }}
+                        </td>
+                        <td>
+                          {{
+                          data.unit_price
+                          | currency: '&#8358;':true:'1.2-2'
+                          }}
+                        </td>
+                        <td>
+                          <p-badge value="{{data.quantity}}" severity="info" styleClass=""></p-badge>
+
+                        </td>
+                        <td>
+                          <span class="image-text ml-2">{{
+                            data.unit_price * data.quantity
+                            | currency: '&#8358;':true:'1.2-2'
+                            }}</span>
+                        </td>
+                        <td>
+                          <span class="image-text ml-2">
+                            <button pButton pRipple label="View" icon="pi pi-eye" class="p-button-text"
+                              (click)="viewOrderItemDetail(data);visible2 = true;"></button>
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="8">No Customer Order found.</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                      <tr>
+                        <td colspan="8">
+                          Loading Customer Order. Please wait.
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Delivery Order">
+            <div class="">
+              <!-- <div class="text-3xl font-medium light-green-font mb-3">Customer Order Item List</div> -->
+              <div class="font-medium light-green-font mb-3">List of Delivery Order </div>
+              <div class="border-2 border-dashed surface-border p-3">
+
+                <div class="surface-section">
+                  <p-table #dt1 [value]="deliveryOrders ? deliveryOrders : []" dataKey="id" [rows]="10"
+                    [loading]="loading" [rowHover]="true" styleClass="" [paginator]="true" [globalFilterFields]="[
+                    'uid',
+                    'unit_price',
+                    'quantity',
+                    'created_at',
+                    'updated_at'
+                  ]" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Total Items
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Estimated Delivery Date
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Date Created
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Last Updated Date
+                          </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                          <div class="flex justify-content-between align-items-center">
+                            Action
+                          </div>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                      <tr>
+                        <td>
+                          <p-badge value="{{data.deliveryOrderItems.length}}" severity="info" styleClass=""></p-badge>
+                        </td>
+                        <td>
+                          <span class="image-text ml-2">{{
+                            data.estimated_delivery_date | date: 'MMM y, d'
+                            }}</span>
+                        </td>
+                        <td>
+                          <span class="image-text ml-2">{{
+                            data.created_at | date: 'MMM y,d hh:mm:ss a'
+                            }}</span>
+                        </td>
+
+                        <td>
+                          <span class="image-text ml-2">{{
+                            data.updated_at | date: 'MMM y,d hh:mm:ss a'
+                            }}</span>
+                        </td>
+                        <td>
+                          <span class="image-text ml-2">
+                            <button pButton type="button" label="View" icon="pi pi-eye" class="p-button-text"
+                              (click)="viewDeliveryOrderItemDetail(data);visible3 = true;"></button>
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="8">No Delivery Order found.</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                      <tr>
+                        <td colspan="8">
+                          Loading Delivery Order. Please wait.
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+<div class="">
+  <p-dialog header="ASSIGN LOGISTICS PROVIDER" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '30vw', height: '300px' }">
+    <form [formGroup]="logisticsProviderForm">
+      <p-dropdown formControlName="name" [options]="logisticsProviderResource" optionLabel="name" optionValue="uid"
+        name="name" placeholder="Select Logistics Provider..." [virtualScroll]="true" [virtualScrollItemSize]="38"
+        [style]="{ width: '25vw' }" class="flex justify-content-center"></p-dropdown>
+      <button pRipple pButton type="button" label="Assign" (click)="assignLogisticsProvider()"
+        class="p-button-success p-button-outlined mt-3 ml-4" icon="pi pi-chart-line" iconPos="right"></button>
+    </form>
+  </p-dialog>
+</div>

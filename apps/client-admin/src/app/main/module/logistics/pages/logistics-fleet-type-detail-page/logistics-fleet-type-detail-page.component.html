@@ -1,0 +1,111 @@
+<!-- Dialog start -->
+<p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<!-- Dialog end -->
+
+<div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+<p-card styleClass="mt-4">
+    <h4 class="text text-primary"> Logistics Fleet Type Detail</h4>
+    <div *ngIf="!updateMode">
+      <div class="grid">
+        <div class="col-8 md:col-4 mb-4 px-5">
+          <div class="text-700 mb-1 font-medium text-green-500"><i class="pi pi-user mr-1"></i>
+            Name:</div>
+          <span class="text-900 line-height-3">{{data?.name}}</span>
+        </div>
+
+        <div class="col-8 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium text-green-500"><i class="pi pi-calendar mr-1"></i>
+              Created At:</div>
+            <span class="text-900 line-height-3">{{data?.created_at}}</span>
+          </div>
+
+          <div class="col-8 md:col-4 mb-4 px-5">
+            <div class="text-700 mb-1 font-medium text-green-500"><i class="pi pi-calendar mr-1"></i>
+              Updated At:</div>
+            <span class="text-900 line-height-3">{{data?.updated_at}}</span>
+          </div>
+
+       
+       
+
+      </div>
+      <div>
+        <hr />
+        <div class="flex justify-content-between w-full">
+          <button pRipple pButton pRipple type="button" label="Go Back" (click)="goBack()" class=" p-button-warning"
+            icon="pi pi-arrow-left" iconPos="left"></button>
+
+          <div>
+            <button pButton pRipple icon="pi pi-trash" iconPos="right" type="button" label="Delete" (click)="deleteFleet()"
+              class="p-button-danger"></button>
+
+            <button pButton pRipple icon="pi pi-pencil" iconPos="right" type="button" label="Edit" (click)="editLogisticsFleetType()"
+              class="p-button-primary ml-5  mr-1"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+    <div *ngIf="updateMode">
+
+        <form [formGroup]="logisticsFleetTypeFrm" (ngSubmit)="updateLogisticsFleetType()">
+
+          
+
+            <div class="card">
+                <div class="formgrid grid">
+                   
+                        <div class="field col-12 md:col-12">
+                            <label for="name"><b>Name</b> <span class="p-error"> *</span></label>
+                            <input id="full_name" type="text" formControlName="name"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required> <br>
+                            <small class="p-error" *ngIf="logisticsFleetTypeControls['name'].errors?.['required']
+                            && logisticsFleetTypeControls['name'].touched">
+                              Name is required
+                            </small>
+                            <br>
+                         </div> 
+<!-- 
+                               <div style="float:right;" class="container"> 
+                                <button pButton type="submit" label="Update" class="p-button-primary ml-3 justify-self-right"></button></div> -->
+
+                             
+                                <div class="field col-12 md:col-12">
+                                  <hr />
+                                  <div class="flex justify-content-between w-full">
+                                    <button pRipple pButton pRipple type="button" label="Go Back" (click)="goBack()" class=" p-button-warning"
+                                      icon="pi pi-arrow-left" iconPos="left"></button> 
+                          
+                                    <div>
+                                      <button pButton pRipple icon="pi pi-user-edit" iconPos="right" type="button" label="Update" (click)="updateLogisticsFleetType()"
+                                        class="p-button-success"></button>
+                        
+                                    </div>
+                                  </div>
+                                </div>
+                             
+            </div></div>
+
+
+        </form>
+
+
+</div>
+</p-card>
+
+
+
+

@@ -1,0 +1,199 @@
+<div class="mb-2">
+  <p-breadcrumb
+    [model]="breadcrumbItems"
+    [home]="{ icon: 'pi pi-home' }"
+  ></p-breadcrumb>
+</div>
+<p-confirmDialog
+  header="Confirmation"
+  key="confirm1"
+  icon="pi pi-exclamation-triangle"
+  message="Are you sure you want to proceed?"
+  [style]="{ width: '350px' }"
+  acceptButtonStyleClass="p-button-text"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+<div class="card">
+  <div
+    class="card"
+    header="Commodity"
+    *ngIf="operation === 'Edit'"
+  >
+    <h5>Update Commodity Stock</h5>
+    <br />
+    <form [formGroup]="commodityStockEntryForm">
+      <div class="grid p-fluid mt-3">
+        <div class="field col-12 md:col-6">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="types"
+              bindLabel="name"
+              placeholder="Select Type . . ."
+              bindValue="name"
+              formControlName="type"
+              optionLabel="name"
+            ></p-dropdown>
+            <label for="inputtext">Category Name</label>
+          </span>
+          <div
+            *ngIf="
+              commodityStockEntryFormControls['type']
+                .invalid &&
+              commodityStockEntryFormControls['type']
+                .touched
+            "
+          >
+            <span
+              *ngIf="commodityStockEntryFormControls['type'].errors?.['required'] "
+              class="p-error"
+              >Category type is required!</span
+            >
+            <span
+              *ngIf="commodityStockEntryFormControls['type'].errors?.['minlength'] "
+              class="p-error"
+              >Category name must be atlease 3
+              characters</span
+            >
+          </div>
+        </div>
+      </div>
+      <hr class="mb-3" />
+
+      <div formArrayName="items">
+        <div
+          class="p-fluid p-formgrid grid"
+          *ngFor="
+            let item of commodityStockEntryFormItemsControls;
+            let i = index
+          "
+          [formArrayName]="i"
+        >
+          <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+              <input
+                pInputText
+                type="number"
+                placeholder=""
+                formControlName="quantity_supplied"
+              />
+              <label for="user-group-name"
+                >Quantity Supplied</label
+              >
+            </span>
+          </div>
+          <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+              <input
+                pInputText
+                type="price"
+                placeholder=""
+                formControlName="unit_price"
+              />
+              <label for="user-group-name"
+                >Unit Price</label
+              >
+            </span>
+          </div>
+          <div class="field col-12 md:col-4">
+            <p-dropdown
+              [options]="commodityStocks"
+              bindLabel="uid"
+              placeholder="Select Commodity Stock . . ."
+              bindValue="uid"
+              formControlName="commodity_stock_uid"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-content-end mb-3">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-minus"
+          label="Remove Item"
+          class="mr-5 p-button-outlined p-button-danger"
+          (click)="removeItemForm()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-plus"
+          label="Add Item"
+          class="mr-5 p-button-outlined p-button-success"
+          (click)="newItemForm()"
+        ></button>
+      </div>
+      <hr />
+      <div class="flex justify-content-end w-full">
+        <button
+          pButton
+          type="submit"
+          icon="pi pi-save"
+          label="Update"
+          class="p-button-outlined p-button-primary"
+          [disabled]="commodityStockEntryForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </div>
+
+  <div
+    class="grid"
+    *ngIf="!operation || operation === 'Update'"
+  >
+    <div class="col-10 md:col-4 mb-4 px-5">
+      <div class="text-700 mb-1 font-medium text-green-500">
+        <i class="pi pi-ticket mr-1"></i>Type:
+      </div>
+      <span class="text-900 line-height-3">Type</span>
+    </div>
+    <div class="col-10 md:col-4 mb-4 px-5">
+      <div class="text-700 mb-1 font-medium text-green-500">
+        <i class="pi pi-verified mr-1"></i>Quantity Supplied
+      </div>
+      <span class="text-900 line-height-3"
+        >Quantity Supplied</span
+      >
+    </div>
+
+    <div class="col-10 md:col-4 mb-4 px-5">
+      <div class="text-700 mb-1 font-medium text-green-500">
+        <i class="pi pi-ticket mr-1"></i>Unit Price:
+      </div>
+      <span class="text-900 line-height-3">Unit price</span>
+    </div>
+    <div class="col-10 md:col-4 mb-4 px-5">
+      <div class="text-700 mb-1 font-medium text-green-500">
+        <i class="pi pi-verified mr-1"></i>Quantity
+        Supplied:
+      </div>
+      <span class="text-900 line-height-3">Stock</span>
+    </div>
+    <hr style="width: 100%" />
+    <div
+      class="flex align-items-end justify-content-between w-full"
+    >
+      <button
+        pButton
+        type="button"
+        icon="pi pi-arrow-left"
+        (click)="back()"
+        label="Go Back"
+        class="ml-5 p-button-outlined p-button-danger"
+      ></button>
+
+      <div>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          (click)="processRequest()"
+          [label]="
+            operation === 'Update' ? operation : 'Edit'
+          "
+          class="ml-5 p-button-outlined p-button-success"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

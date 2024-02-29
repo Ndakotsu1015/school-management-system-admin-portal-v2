@@ -1,0 +1,264 @@
+<!-- Dialog start -->
+<p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<!-- Dialog end -->
+
+<!-- <p-card>
+    <h4 class="text text-primary">User Details</h4>
+    <div class="grid" *ngIf="!updateMode">
+        <div class="col-8 md:col-4 mb-4 px-5">
+          <div class="text-700 mb-1 font-medium text-green-500"><i class="pi pi-user mr-1"></i>Full Name:</div>
+          <span class="text-900 line-height-3">{{data.full_name}}</span>
+        </div>
+        <div class="col-8 md:col-4 mb-4 px-5">
+          <div class="text-700 mb-1 font-medium text-green-500"><i class="pi pi-envelope mr-1"></i>Email:</div>
+          <span class="text-900 line-height-3">{{data.email}}</span>
+        </div>
+      </div>
+      <div>
+        <hr />
+        <div class="flex justify-content-between w-full">
+          <button
+            pRipple
+            pButton
+            pRipple
+            type="button"
+            label="Go Back"
+            (click)="goBack()"
+            class=" p-button-warning"
+            icon="pi pi-arrow-left"
+            iconPos="left"
+          ></button>
+          <div>
+          <button
+                      *ngIf="data.is_active"
+                      pButton
+                      pTooltip="Deactivate user"
+                      tooltipPosition="bottom"
+                      label="Deativate"
+                      type="button"
+                      icon="pi pi-power-off"
+                      class="p-button-warning p-button mr-5"
+                      iconPos="left"
+                      (click)="deactivate(data.uid)"
+                    ></button>
+                    <button
+                      *ngIf="!data.is_active"
+                      pButton
+                      pTooltip="Activate user"
+                      tooltipPosition="bottom"
+                      type="button"
+                      label="Ativate"
+                      icon="pi pi-power-off"
+                      class="p-button-success p-button mr-5"
+                      iconPos="left"
+                      (click)="activate(data.uid)"
+                    ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            iconPos="right"
+            type="button"
+            label="Delete"
+            (click)="deleteUser()"
+            class="p-button-danger"
+          ></button>
+
+          <button pButton pRipple icon="pi pi-pencil" iconPos="right" type="button" label="Edit" (click)="editUser()"
+            class="p-button-primary ml-5  mr-1"></button>
+
+            
+        </div>
+        </div>
+      </div>
+
+    <diV *ngIf="updateMode">
+        <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+
+            <div class="card">
+                <div class="formgrid grid">
+                    </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="fullname"><b>Full Name</b> <span class="p-error"> *</span></label>
+                            <input id="full_name" type="text" formControlName="full_name"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required>
+                            <small class="p-error" *ngIf="userFormControls['full_name'].errors?.['required']
+                            && userFormControls['full_name'].touched">
+                              Full Name is required
+                            </small>
+                            <br>
+                         </div>
+
+                         <div class="field col-12 md:col-6">
+                            <label for="email"><b>Email Address</b><span class="p-error"> *</span></label>
+                            <input id="uid" type="text" formControlName="email"
+                            class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full"
+                            required>
+                            <small class="p-error" *ngIf="userFormControls['email'].errors?.['required']
+                            && userFormControls['email'].touched">
+                              Email is required
+                            </small>
+                            <small class="p-error" *ngIf="userFormControls['email'].errors?.['email']
+                            && userFormControls['email'].touched">
+                              Must be a valid email address
+                            </small>
+
+                        </div>
+                        <hr style="color: blue;">
+                             <button pButton type="submit" label="Update" class="p-button-primary ml-12 justify-self-right"></button>
+                 </div>
+        </form>
+
+
+</diV>
+</p-card> -->
+
+<div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+<div class="text-900 text-3xl font-medium mb-2 mt-1 nunito-font">
+  <span class="deep-green-font"><strong>User Details</strong></span>
+</div>
+
+<div *ngIf="updateMode" class="surface-card shadow-1 p-5 border-round bg-light mt-4 mb-5">
+  <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+
+    <div class="">
+        <div class="p-fluid p-formgrid grid">
+          <div class="field col-12 md:col-6">
+            <label for="fullname"><b>Full Name</b> <span class="p-error"> *</span></label>
+            <input id="full_name" type="text" formControlName="full_name"
+            class="text-base text-color surface-overlay
+            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+            focus:border-primary w-full"
+            required>
+            <small class="p-error" *ngIf="userFormControls['full_name'].errors?.['required']
+            && userFormControls['full_name'].touched">
+              Full Name is required
+            </small>
+            <br>
+         </div>
+
+         <div class="field col-12 md:col-6">
+            <label for="email"><b>Email Address</b><span class="p-error"> *</span></label>
+            <input id="uid" type="text" formControlName="email"
+            class="text-base text-color surface-overlay
+            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+            focus:border-primary w-full"
+            required>
+            <small class="p-error" *ngIf="userFormControls['email'].errors?.['required']
+            && userFormControls['email'].touched">
+              Email is required
+            </small>
+            <small class="p-error" *ngIf="userFormControls['email'].errors?.['email']
+            && userFormControls['email'].touched">
+              Must be a valid email address
+            </small>
+
+        </div>
+            </div>
+                
+                <hr style="color: blue;">
+                     <button pButton type="submit" label="Update" class="p-button-primary ml-12 justify-self-right"></button>
+         </div>
+</form>
+</div>
+
+
+
+<div *ngIf="!updateMode" class="surface-card shadow-1 pt-3 pl-3 border-round mb-5 mt-3">
+  <div class="text-900 text-1xl font-medium">
+    <span class="deep-green-font"
+      ><strong>User Details</strong></span
+    >
+  </div>
+
+  <div class="px-2 py-5 md:px-1 lg:px-3">
+    <div
+      class="flex align-items-start flex-column lg:justify-content-between lg:flex-row"
+    >
+      <div>
+        <div class="font-bold text-4xl light-green-font">
+          <strong class="deep-green-font">User Name: </strong>{{ data.full_name }}
+        </div>
+        <div class="flex align-items-center text-700 flex-wrap">
+          <div class="mr-5 flex align-items-center mt-3">
+            <i class="pi pi-users mr-2 font-bold deep-green-font"></i>
+            <span
+              ><strong class="font-bold deep-green-font"> Email</strong
+              ><span class="light-green-font">
+                Address :
+                <p-badge
+                  value="{{ data.email }}"
+                  severity="info"
+                  styleClass="mr-2"
+                ></p-badge></span
+            ></span>
+          </div>
+          <div class="mr-5 flex align-items-center mt-3">
+            <i class="pi pi-clock mr-2 font-bold deep-green-font"></i>
+            <span
+              ><strong class="font-bold deep-green-font"> Created at : </strong
+              ><span class="light-green-font">{{
+                data.created_at | date: 'MMM d, y'
+              }}</span></span
+            >
+          </div>
+          <div class="mr-5 flex align-items-center mt-3">
+            <i class="pi pi-clock mr-2 font-bold deep-green-font"></i>
+            <span
+              ><strong class="font-bold deep-green-font"> Updated at : </strong
+              ><span class="light-green-font">{{
+                data.updated_at | date: 'MMM d, y'
+              }}</span></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 lg:mt-0 mr-4">
+        <button
+                        *ngIf="data.is_active"
+                        pButton
+                        pTooltip="Deactivate user"
+                        tooltipPosition="bottom"
+                        label="Deativate"
+                        type="button"
+                        icon="pi pi-power-off"
+                        class="p-button-warning p-button mr-2 p-button-outlined p-button-raised p-button-rounded"
+                        iconPos="left"
+                        (click)="deactivate(data.uid)"
+                      ></button>
+                      <button
+                        *ngIf="!data.is_active"
+                        pButton
+                        pTooltip="Activate user"
+                        tooltipPosition="bottom"
+                        type="button"
+                        label="Ativate"
+                        icon="pi pi-power-off"
+                        class="p-button-success p-button-outlined p-button-raised p-button-rounded mr-2"
+                        iconPos="left"
+                        (click)="activate(data.uid)"
+                      ></button>
+        <button pButton pRipple label="Delete" class="p-button-outlined p-button-raised p-button-danger p-button-rounded mr-2"
+          icon="pi pi-trash" (click)="deleteUser()"></button>
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-raised p-button-rounded p-button-success"
+          (click)="editUser()" label="Edit"></button>
+      </div>
+    </div>
+    
+  </div>
+</div>     
+        
+    

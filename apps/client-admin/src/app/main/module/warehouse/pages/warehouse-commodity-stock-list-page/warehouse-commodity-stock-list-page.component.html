@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="flex justify-content-between mb-3">
+    <h5>Commodity Stock List</h5>
+    <button pButton type="button" (click)="newPage()" icon="pi pi-plus" label="New Stock"
+      class="p-button-primary p-button mr-7"></button>
+  </div>
+
+  <p-table #dt1 [value]="commodityStocks ? commodityStocks : []" dataKey="id" [rows]="10" [loading]="loading"
+    [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="[
+      'warehouse.name',
+      'commodityVariant.name',
+      'quantity'
+    ]" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between flex-column sm:flex-row">
+        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+          (click)="clear(dt1)"></button>
+        <span class="p-input-icon-left mb-2">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+            class="w-full" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Warehouse
+            <p-columnFilter type="text" field="warehouse.name" display="menu" placeholder="Search by name">
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Commodity Variant
+            <p-columnFilter type="text" field="commodityVariant.name" display="menu"
+              placeholder="Search by description">
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Quantity
+            <p-columnFilter type="text" field="quantity" display="menu" placeholder="Search by description">
+            </p-columnFilter>
+          </div>
+        </th>
+        <!-- <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Restock Target Level
+            <p-columnFilter type="text" field="restock_target_level" display="menu" placeholder="Search by description">
+            </p-columnFilter>
+          </div>
+        </th>
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Holding Target Level
+            <p-columnFilter type="text" field="holding_target_level" display="menu" placeholder="Search by description">
+            </p-columnFilter>
+          </div>
+        </th> -->
+
+        <th style="min-width: 12rem">
+          <div class="flex justify-content-between align-items-center">
+            Action
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-commodityStock>
+      <tr>
+        <td>
+          {{ commodityStock.warehouse?.name }}
+        </td>
+        <td>
+          <span class="image-text ml-2">{{
+            commodityStock.commodityVariant?.name
+            }}</span>
+        </td>
+        <td>
+          <span class="image-text ml-2">{{
+            commodityStock.quantity
+            }}</span>
+        </td>
+        <!-- <td>
+          <span class="image-text ml-2">{{commodityStock.restock_target_level}}</span>
+        </td>
+        <td>
+          <span class="image-text ml-2">{{commodityStock.holding_target_level}}</span>
+        </td> -->
+
+        <td>
+          <span class="image-text ml-2">
+            <button pButton type="button" icon="pi pi-eye" (click)="detailPage(commodityStock.uid)"
+              class="p-button-outlined p-button-primary mr-2"></button>
+            <!-- <button pButton type="button" icon="pi pi-trash" (click)="onDelete(commodityStocks)"
+                class="p-button-danger "></button> -->
+
+            <!-- <p-confirmDialog header="Confirmation" key="confirm1" icon="pi pi-exclamation-triangle"
+                message="Are you sure you want to proceed?" [style]="{width: '350px'}"
+                acceptButtonStyleClass="p-button-text" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+              <button type="button" (click)="confirm1()" pButton icon="pi pi-trash" class="p-button-danger"
+                style="width:auto;"></button> -->
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No Commodity Stock found.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="8">
+          Loading Commodity Stock. Please wait.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

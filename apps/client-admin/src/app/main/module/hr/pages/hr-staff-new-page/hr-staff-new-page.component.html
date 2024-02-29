@@ -1,0 +1,139 @@
+
+<div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+<div class="surface-card shadow-1 p-4 border-round bg-light mt-4">
+  <h3 class="text text-primary p-shadow-1 font-bold"> Add Staff</h3>
+  <hr>
+      <form [formGroup]="hrStaffForm" (ngSubmit)="addStaff()">
+
+        <div class="">
+          <div class="p-fluid p-formgrid grid">
+            <div class=" col-12 md:col-6">
+              <label class="deep-green-font font-bold" for="uid">Staff Identification Number</label>
+              <input pInputText id="uid" type="text" placeholder="Enter Staff Identification Number" formControlName="uid"
+                [class.ng-invalid]="
+                    hrStaffForm.controls['uid'].invalid &&
+                    hrStaffForm.controls['uid'].touched
+                  " />
+              <div *ngIf="
+                  hrStaffForm.controls['uid'].invalid &&
+                  hrStaffForm.controls['uid'].touched
+                " class="p-error block">
+                <small id="uid" class="p-error block" *ngIf="hrStaffForm.controls['uid'].errors?.['required']">
+                  This field is required
+                </small>
+                <small id="uid" class="p-error block" *ngIf="hrStaffForm.controls['uid'].errors?.['minlength']">
+                  Character must be at least 3
+                </small>
+              </div>
+            </div>
+    
+            <!-- <div class="field col-12 md:col-6">
+              <label  class="font-bold deep-green-font" for="deponetname"><b>Staff Identification Number</b><span class="p-error"> *</span></label>
+              <input id="uid" type="text" formControlName="uid" class="text-base text-color surface-overlay
+                    p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                    focus:border-primary w-full" required>
+              <small class="p-error" *ngIf="hrStaffFormControls['uid'].errors?.['required']
+                        && hrStaffFormControls['uid'].touched">
+                Staff Identification Number is required
+              </small>
+    
+            </div> -->
+    
+            <div class=" col-12 md:col-6">
+              <label class="deep-green-font font-bold" for="full_name">Full Name</label>
+              <input pInputText id="full_name" type="text" placeholder="Enter Full Name" formControlName="full_name"
+                [class.ng-invalid]="
+                    hrStaffForm.controls['full_name'].invalid &&
+                    hrStaffForm.controls['full_name'].touched
+                  " />
+              <div *ngIf="
+                  hrStaffForm.controls['full_name'].invalid &&
+                  hrStaffForm.controls['full_name'].touched
+                " class="p-error block">
+                <small id="full_name" class="p-error block" *ngIf="hrStaffForm.controls['full_name'].errors?.['required']">
+                  This field is required
+                </small>
+                <small id="full_name" class="p-error block" *ngIf="hrStaffForm.controls['full_name'].errors?.['minlength']">
+                  Character must be at least 3
+                </small>
+              </div>
+            </div>
+    
+            <div class=" col-12 md:col-6">
+              <label class="deep-green-font font-bold" for="contact_email">Email Address</label>
+              <input pInputText id="contact_email" type="text" placeholder="Enter Email Address"
+                formControlName="contact_email" [class.ng-invalid]="
+                    hrStaffForm.controls['contact_email'].invalid &&
+                    hrStaffForm.controls['contact_email'].touched
+                  " />
+              <div *ngIf="
+                  hrStaffForm.controls['contact_email'].invalid &&
+                  hrStaffForm.controls['contact_email'].touched
+                " class="p-error block">
+                <small id="contact_email" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_email'].errors?.['required']">
+                  This field is required
+                </small>
+                <small id="contact_email" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_email'].errors?.['minlength']">
+                  Character must be at least 3
+                </small>
+              </div>
+            </div>
+            <div class=" col-12 md:col-6">
+              <label class="deep-green-font font-bold" for="contact_phone">Contact Phone Number</label>
+              <input pInputText id="contact_phone" type="text" placeholder="Enter Contact Phone Number"
+                formControlName="contact_phone" [class.ng-invalid]="
+                    hrStaffForm.controls['contact_phone'].invalid &&
+                    hrStaffForm.controls['contact_phone'].touched
+                  " />
+              <div *ngIf="
+                  hrStaffForm.controls['contact_phone'].invalid &&
+                  hrStaffForm.controls['contact_phone'].touched
+                " class="p-error block">
+                <small id="contact_phone" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_phone'].errors?.['required']">
+                  This field is required
+                </small>
+                <small id="contact_phone" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_phone'].errors?.['minlength']">
+                  Character must be at least 3
+                </small>
+              </div>
+            </div>
+            <div class="col-12 md:col-12">
+              <label class="deep-green-font font-bold" for="contact_address">Contact Address</label>
+              <textarea pInputTextarea id="contact_address" placeholder="Enter Contact Address"
+                formControlName="contact_address" [class.ng-invalid]="
+                  hrStaffForm.controls['contact_address'].invalid &&
+                  hrStaffForm.controls['contact_address'].touched
+                "></textarea>
+              <div *ngIf="
+                hrStaffForm.controls['contact_address'].invalid &&
+                hrStaffForm.controls['contact_address'].touched
+              " class="p-error block">
+                <small id="contact_address" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_address'].errors?.['required']">
+                  This field is required
+                </small>
+                <small id="contact_address" class="p-error block"
+                  *ngIf="hrStaffForm.controls['contact_address'].errors?.['minlength']">
+                  Character must be at least 3
+                </small>
+              </div>
+            </div>
+            
+          </div>
+    
+          <hr>
+          <button pButton type="submit" label="Save" class="p-button-primary ml-12 justify-self-right"></button>
+        </div>
+      </form>
+</div>

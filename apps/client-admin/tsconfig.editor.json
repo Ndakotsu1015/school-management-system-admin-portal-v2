@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "**/*.ts",
+    "../client-ecommerce/src/app/api/endpoints/account/profile.endpoint.ts",
+    "../client-ecommerce/src/app/api/endpoints/shipping-address.endpoint.ts"
+  ],
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "node"
+    ]
+  }
+}

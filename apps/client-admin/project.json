@@ -1,0 +1,110 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/client-admin/src",
+  "prefix": "hacienda-platform",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/client-admin",
+        "index": "apps/client-admin/src/index.html",
+        "main": "apps/client-admin/src/main.ts",
+        "polyfills": "apps/client-admin/src/polyfills.ts",
+        "tsConfig": "apps/client-admin/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/client-admin/src/favicon.ico",
+          "apps/client-admin/src/assets"
+        ],
+        "styles": [
+          "apps/client-admin/src/styles.scss"
+        ],
+        "scripts": [
+          "node_modules/quill/dist/quill.js"
+        ],
+        "allowedCommonJsDependencies": [
+          "ngx-google-places-autocomplete",
+          "chart.js",
+          "quill"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "5mb",
+              "maximumError": "10mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/client-admin/src/environments/environment.ts",
+              "with": "apps/client-admin/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "client-admin:build:production"
+        },
+        "development": {
+          "browserTarget": "client-admin:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4300,
+        "proxyConfig": "apps/client-admin/proxy.conf.json"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "client-admin:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/client-admin/**/*.ts",
+          "apps/client-admin/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/client-admin"
+      ],
+      "options": {
+        "jestConfig": "apps/client-admin/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

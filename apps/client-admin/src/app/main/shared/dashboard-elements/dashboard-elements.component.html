@@ -1,0 +1,101 @@
+
+<div class="grid">
+<div class="lg:col-6 col-6" *ngFor="let item of data; index as i">
+    <div class="card text-capitalize">
+      <div class="card-header">
+        <h4 class="card-title mb-0">
+          <strong class="text-primary">Title:</strong> {{ item.chart_title }}
+        </h4>
+      </div>
+      <div class="card-body text-center pointer" style="height: 350px;">
+        <ngx-charts-bar-vertical
+        
+        [view]=" [450, 350]"
+        [results]="item.data"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="''"
+        [yAxisLabel]="''" *ngIf="item.chart_category.chart_category === 'Bar' && item.is_group === false && item.chart_category.chart_provider_id === 2">
+        </ngx-charts-bar-vertical>
+        <ngx-charts-bar-vertical-2d
+        
+        [view]=" [450, 350]"
+        [results]="createGroup(item.data)"
+        [gradient]="false"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="''"
+        [yAxisLabel]="''" *ngIf="item.chart_category.chart_category === 'Bar' && item.is_group === true && item.chart_category.chart_provider_id === 2">
+        </ngx-charts-bar-vertical-2d>
+
+        <ngx-charts-pie-chart
+            [view]=" [450, 350]"
+            [results]="item.data"
+            [gradient]="false"
+            [legend]="false"
+            [labels]="true"
+            [doughnut]="item.chart_type.chart_type.includes('doughnut')? true: false"
+            *ngIf="item.chart_category.chart_category === 'Pie' && (item.chart_type.chart_type === 'doughnut' || item.chart_type.chart_type === 'pie') && item.is_group === false && item.chart_category.chart_provider_id === 2"
+        >
+        </ngx-charts-pie-chart>
+
+        <ngx-charts-advanced-pie-chart
+            [view]=" [450, 350]"
+            [results]="item.data"
+            [gradient]="false"
+            *ngIf="item.chart_category.chart_category === 'Pie' && item.chart_type.chart_type === 'advanced-pie' && item.is_group === false && item.chart_category.chart_provider_id === 2"
+        >
+        </ngx-charts-advanced-pie-chart>
+
+        <ngx-charts-pie-grid
+            [view]=" [450, 350]"
+            [results]="item.data"
+            *ngIf="item.chart_category.chart_category === 'Pie' && item.chart_type.chart_type === 'pie-grid' && item.chart_type.chart_type === 'pie-grid' && item.is_group === false && item.chart_category.chart_provider_id === 2"
+            >
+        </ngx-charts-pie-grid>
+
+        <ngx-charts-gauge
+            [view]=" [450, 350]"
+            [results]="item.data"
+            [legend]="true"
+            *ngIf="item.chart_category.chart_category === 'Gauge' && item.chart_category.chart_provider_id === 2"
+        >
+        </ngx-charts-gauge>
+
+        <ngx-charts-number-card
+            [view]=" [450, 350]"
+            [results]="item.data"
+            [cardColor]="cardColor"
+            *ngIf="item.chart_category.chart_category === 'NumberCards'  && item.chart_category.chart_provider_id === 2"
+        >
+        </ngx-charts-number-card>
+
+        <ngx-charts-line-chart
+            [view]=" [450, 350]"
+            
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [curve]="curve"
+            [xAxisLabel]="''"
+            [yAxisLabel]="''"
+            [timeline]="true"
+            [results]="createGroup(item.data)"
+            *ngIf="item.chart_category.chart_category === 'Line'  && item.is_group === false && item.chart_category.chart_provider_id === 2"   
+        >
+        </ngx-charts-line-chart>
+
+        <!-- <p-chart type="{{item.chart_type}}" *ngIf="item.chart_category == 'Bar' && item.is_group == false" [data]="basicData" [options]="basicOptions"></p-chart> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+  <div class="mb-4 flex pt-0">
+    <p-button icon="pi pi-chevron-circle-left" label="" (onClick)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+    <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+  </div>
+</div>
+
+  <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-4">
+    <div class="text-900 text-1xl font-medium pt-3">
+      <span class="deep-green-font"
+        ><strong>Add Logistics Fleet Type</strong></span
+      >
+    </div>
+    <hr>
+
+  <form [formGroup]="logisticsFleetForm">
+
+    <div class="px-2">
+      <div class="formgrid grid">
+
+        <div class="field col-12 md:col-12">
+          <label for="fullname"><b>Name</b> <span class="p-error"> *</span></label>
+          <input id="name" type="text" formControlName="name" class="text-base text-color surface-overlay
+                            p-2 border-1 border-solid surface-border border-round appearance-none outline-none
+                            focus:border-primary w-full" required>
+          <small class="p-error" *ngIf="logisticsFleetFormControls['name'].errors?.['required']
+                            && logisticsFleetFormControls['name'].touched">
+            Name is required
+          </small>
+          <br>
+        </div>
+
+      </div>
+      <div>
+        <hr />
+        <div class="flex justify-content-between w-full">
+          <button pRipple pButton pRipple type="button" label="Go Back" (click)="goBack()" class=" p-button-warning"
+            icon="pi pi-arrow-left" iconPos="left"></button>
+
+          <div>
+            <button pButton pRipple icon="pi pi-user" iconPos="right" type="button" label="Save"
+              (click)="addLogisticsFleetType()" class="p-button-success"></button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <hr style="color: blue;">
+                             <div class="flex justify-content-end">
+                              <button pButton type="submit" label="Submit" class="p-button-primary ml-12 justify-self-right"
+                                icon="pi pi-user-plus"></button>
+                             </div> -->
+    </div>
+  </form>
+</div>

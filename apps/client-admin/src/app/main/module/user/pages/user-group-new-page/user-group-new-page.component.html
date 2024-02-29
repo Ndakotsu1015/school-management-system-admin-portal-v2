@@ -1,0 +1,112 @@
+
+
+<div class="grid">
+  <div class="col-12 md:col-12">
+    <div class="mb-2">
+      <div style="margin-top: -40px; z-index: 998" class="text-900 text-3xl font-medium page-title">
+        <div class="mb-4 flex pt-0">
+          <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+      styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+    </p-button>
+          <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+        </div>
+      </div>
+
+      <div class="text-900 text-3xl font-medium mb-2 mt-1 nunito-font">
+        <span class="deep-green-font"
+          ><strong>User Administration</strong></span
+        >
+      </div>
+      <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-3">
+        <div class="px-2 py-5 md:px-1 lg:px-3">
+          <div class="grid">
+            <div class="col-12 md:col-6 lg:col-12">
+              <div class="surface-card px-4">
+                <div class="justify-content-between">
+                  <div>
+                    <div class="deep-green-font font-medium text-2xl mb-5">
+                      <strong>Add New User Group</strong>
+                    </div>
+                    <form class="form" [formGroup]="userGroupForm">
+                      <div class="p-fluid">
+                        <div class="field">
+                          <label class="deep-green-font" for="name"
+                            ><strong>User Group Name</strong></label
+                          >
+                          <input
+                            pInputText
+                            id="name"
+                            type="text"
+                            placeholder="Enter User Group Name"
+                            formControlName="name"
+                            [class.ng-invalid]="
+                              userGroupForm.controls['name']
+                                .invalid &&
+                              userGroupForm.controls['name'].touched
+                            "
+                          />
+                          <div
+                            *ngIf="
+                              userGroupForm.controls['name']
+                                .invalid &&
+                              userGroupForm.controls['name'].touched
+                            "
+                            class="p-error block"
+                          >
+                            <small
+                              id="name"
+                              class="p-error block"
+                              *ngIf="userGroupForm.controls['name'].errors?.['required']"
+                            >
+                              This field is required
+                            </small>
+                            <small
+                              id="name"
+                              class="p-error block"
+                              *ngIf="userGroupForm.controls['name'].errors?.['minlength']"
+                            >
+                              Character must be at least 3
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div
+                      class="flex align-items-start flex-column lg:justify-content-between lg:flex-row"
+                    >
+                      <div>
+                        <div
+                          class="flex align-items-center text-700 flex-wrap"
+                        ></div>
+                      </div>
+                      <div class="mt-3 lg:mt-0">
+                        <button
+                          pButton
+                          pRipple
+                          label="Cancel"
+                          class="p-button-outlined p-button-raised p-button-secondary mr-2"
+                          icon="pi pi-times"
+                          (click)="goBack()"
+                        ></button>
+                        <button
+                          class="p-button-raised"
+                          pButton
+                          pRipple
+                          label="Save"
+                          icon="pi pi-check"
+                          [disabled]="!canSubmit"
+                          (click)="addUserGroup()"
+                        ></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

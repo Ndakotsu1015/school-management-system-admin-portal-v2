@@ -1,0 +1,89 @@
+<div class="grid">
+  <div class="col-12 md:col-12">
+    <div style="margin-top: -40px; z-index: 999" class="text-900 text-3xl font-medium page-title">
+      <div class="mb-4 flex pt-0">
+        <p-button icon="pi pi-chevron-circle-left" label="" (click)="goBack()"
+          styleClass="p-button-sm p-button-text p-button-secondary p-button-rounded mr-2">
+        </p-button>
+        <p-breadcrumb styleClass="mt-2 pt-1" [model]="breadcrumbItems" [home]="{ icon: 'pi pi-home' }"></p-breadcrumb>
+      </div>
+    </div>
+    
+    <div class="surface-card shadow-1 px-3 pb-3 border-round bg-light mt-4">
+      <div class="col-12">
+        <div class="pt-2">
+          <div class="light-green-font text-2xl mb-1 font-medium">
+            <strong>Add New Commodity</strong>
+          </div>
+          <br>
+          <form class="form" [formGroup]="commodityForm">
+            <div class="p-fluid p-formgrid grid">
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="name">Commodity Name</label>
+                <input pInputText id="name" type="text" placeholder="Enter Commodity Name"
+                  formControlName="name" [class.ng-invalid]="
+                      commodityForm.controls['name'].invalid &&
+                      commodityForm.controls['name'].touched
+                    " />
+                <div *ngIf="
+                    commodityForm.controls['name'].invalid &&
+                    commodityForm.controls['name'].touched
+                  " class="p-error block">
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityForm.controls['name'].errors?.['required']">
+                    This field is required
+                  </small>
+                  <small id="name" class="p-error block"
+                    *ngIf="commodityForm.controls['name'].errors?.['minlength']">
+                    Character must be at least 3
+                  </small>
+                </div>
+              </div>
+              <div class=" col-12 md:col-6">
+                <label class="deep-green-font font-bold" for="category">category</label>
+                <p-dropdown
+                    [options]="commodityCategories"
+                    [class.is-invalid]="
+                      commodityForm.controls['category'].invalid &&
+                      commodityForm.controls['category'].touched
+                    "
+                    bindLabel="name"
+                    name="category"
+                    id="category"
+                    placeholder="Select Commodity Category . . ."
+                    bindValue="id"
+                    formControlName="category"
+                    optionLabel="name"
+                  ></p-dropdown>
+                  <div
+                    *ngIf="
+                      commodityForm.controls['category'].invalid &&
+                      commodityForm.controls['category'].touched
+                    "
+                  >
+                    <small
+                      *ngIf="commodityForm.controls['category'].errors?.['required']"
+                      class="p-error blockr"
+                      >Commodity Category is Required</small
+                    >
+                  </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+            <div>
+              <div class="flex align-items-center text-700 flex-wrap">
+              </div>
+            </div>
+            <div class="mt-3 lg:mt-0">
+              <button pButton pRipple label="Cancel" class="p-button-outlined p-button-raised p-button-secondary mr-2"
+                icon="pi pi-times" routerLink="/m/commodity/item/list"></button>
+              <button class="p-button-raised" (click)="save()" pButton pRipple label="Save" icon="pi pi-check"
+                [disabled]="commodityForm.invalid"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
